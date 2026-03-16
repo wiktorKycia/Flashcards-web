@@ -1,0 +1,35 @@
+login
+register
+utwórz folder/grupę zasobów
+utwórz zasób (zestaw fiszek)
+	po lewej pojęcia, po prawej definicje	
+	dodaj/usuń/modyfikuj fiszkę
+	podczas pisania pojęcia i definicji podpowiada
+	widok dosyć kompaktowy: jak się pisze fiszke, to ją automatycznie scrolluje do góry, tak, żeby było widać podpowiedzi
+	dobrze przemyślane przechodzenie klawiszem tab
+
+skorzystaj/ucz się zestawu
+	klasyczny tryb fiszki
+	quizletowy test
+	quizletowy tryb dobierania w pary
+	pytania jednokrotnego wyboru
+	uzupełnianie zdań, gdzie część pojęcia jest już uzupełniona (pojedyńcze literki słowa lub słowa jakiejś frazy)
+	zwykłe uzupełnianie zdań
+	uzupełnianie tekstu
+	uzupełnianie zdań, ale literkowe (każde podkreślenie to jedna literka)
+	zamiana podkreślonego słowa na synonim
+	łączenie dwóch części zdań
+	zdania, gdzie trzeba wybrać w pewnym momencie 1 z 3 słów/wyrażeń
+	uzupełnianie luk, gdzie wyraz jest podany w nawiasach i trzeba przekształcić formę - to bardziej do gramatyki
+	uzupełnianie zdań/dialogów gdzie w luce trzeba wybrać jedno z trzech
+	transformacje części zdań, gdzie trzeba użyć wyrazu w niezmienionej formie
+	uzupełnianie tekstu podanymi zdaniami
+	układanie zdań z rozsypanki wyrazowej
+	tekst i pod nim pytania abc (lub otwarte) na rozumienie tekstu
+	grupowanie słów o podobnym znaczeniu - najpierw trzeba sprawdzić, czy takie w ogóle są
+	uzupełnianie epitetów (np. vehementy opposed - to tu opposed trzeba było uzupełnić)
+
+opcjonalnie:
+komentarze do zestawów
+gwiazdkowanie trudniejszych pojęć
+
