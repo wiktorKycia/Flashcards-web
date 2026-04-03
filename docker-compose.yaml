@@ -1,0 +1,78 @@
+services:
+  database:
+    image: mysql:8.0
+    restart: no
+    env_file:
+      - ./backend/.env.database
+    ports:
+      - "127.0.0.1:3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    restart: no
+    ports:
+      - "127.0.0.1:3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      database:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+    env_file:
+      - "./backend/.env.app"
+#    develop:
+#      watch:
+#        - action: sync
+#          path: ./backend
+#          target: /app
+#          ignore:
+#            - Dockerfile
+#            - docker-compose.yaml
+#            - package*.json
+#        - action: rebuild
+#          path: .
+#          target: /app
+#          ignore:
+#            - index.js
+#            - ./static
+  mongo:
+    image: mongo:noble
+    restart: no
+    ports:
+      - "127.0.0.1:27017:27017"
+    env_file:
+      - "./backend/.env.mongo"
+    volumes:
+      - mongo-volume:/data/db
+    command: mongod --quiet --logpath /dev/null
+  
+  front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:5173:5173"
+    env_file:
+      - ./frontend/.env
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      app:
+        condition: service_started
+
+volumes:
+  mysql-volume:
+  mongo-volume:
