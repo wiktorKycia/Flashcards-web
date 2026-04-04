@@ -1,18 +1,16 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import tseslint from 'typescript-eslint'
+import { defineConfig } from 'eslint/config'
 import json from '@eslint/json'
-import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-    globalIgnores(['dist/**/*', 'node_modules/**/*']),
     {
-        files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+        files: ['**/*.{js,mjs,cjs}'],
         plugins: { js },
         extends: ['js/recommended'],
         languageOptions: { globals: globals.node }
     },
-    tseslint.configs.recommended,
+    { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
     {
         files: ['**/*.json'],
         ignores: ['package-lock.json'],
