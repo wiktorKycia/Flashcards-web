@@ -1,7 +1,9 @@
+import styles from './SearchBar.module.scss'
+
 export default function SearchBar() {
     return (
-        <div>
-            <input type="text" />
+        <div className={styles.SearchBar}>
+            <input type="text" placeholder="Search for quizzez..." className={styles.SearchBarInput}/>
         </div>
     )
 }
