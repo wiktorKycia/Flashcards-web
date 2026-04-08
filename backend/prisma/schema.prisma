@@ -13,3 +13,74 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  email       String  @unique
+  password    String
+  path_to_img String?
+
+  createdQuizzez   Quiz[]
+  UserQuizProgress UserQuizProgress[]
+  SavedQuiz        SavedQuiz[]
+  Folder           Folder[]
+}
+
+model Quiz {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  flashcards       Flashcard[]
+  UserQuizProgress UserQuizProgress[]
+  SavedQuiz        SavedQuiz[]
+}
+
+model Flashcard {
+  id        Int    @id @default(autoincrement())
+  language1 String
+  language2 String
+  side1     String
+  side2     String
+
+  quizId Int
+  quiz   Quiz @relation(fields: [quizId], references: [id])
+
+  UserQuizProgress UserQuizProgress[]
+}
+
+model UserQuizProgress {
+  id        Int     @id @default(autoincrement())
+  isStarred Boolean @default(false)
+  isKnown   Boolean @default(false)
+
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  quizId      Int
+  quiz        Quiz      @relation(fields: [quizId], references: [id])
+  flashcardId Int
+  flashcard   Flashcard @relation(fields: [flashcardId], references: [id])
+}
+
+model Folder {
+  id     Int    @id @default(autoincrement())
+  name   String
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+
+  SavedQuiz SavedQuiz[]
+}
+
+model SavedQuiz {
+  id       Int     @id @default(autoincrement())
+  userId   Int
+  user     User    @relation(fields: [userId], references: [id])
+  quizId   Int
+  quiz     Quiz    @relation(fields: [quizId], references: [id])
+  folderId Int? // quiz może być w folderze, ale nie musi, może być też po prostu u użytkownika
+  folder   Folder? @relation(fields: [folderId], references: [id])
+}
