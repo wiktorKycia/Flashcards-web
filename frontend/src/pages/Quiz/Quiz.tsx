@@ -1,5 +1,5 @@
 import Header from '../../components/Header'
-import ProfilePicture from "../../components/ProfilePicture/ProfilePicture.tsx";
+import Person from "../../components/Person";
 
 export default function Quiz() {
     return (
@@ -39,8 +39,7 @@ export default function Quiz() {
                         <button>full screeen</button>
                     </div>
                     <div>
-                        <ProfilePicture/>
-                        <h3>author name</h3>
+                        <Person name={"John doe"} title={"author"}/>
                         <button>like</button>
                         <button>dislike</button>
                     </div>
