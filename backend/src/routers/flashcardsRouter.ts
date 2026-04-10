@@ -34,10 +34,10 @@ router.get("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, ne
         })
 
         if (flashcard) {
-            res.json(flashcard)
+            return res.json(flashcard)
         }
         else{
-            res.status(404).json({message: "Flashcard not found"})
+            return res.sendStatus(404)
         }
     }
     catch (error) {
@@ -51,7 +51,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
             data: req.body as FlashcardCreate,
         })
 
-        res.status(201).json(createdFlashcard)
+        return res.status(201).json(createdFlashcard)
     }
     catch (error) {
         next(error)
@@ -70,7 +70,7 @@ router.patch("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, 
             data: updatedFlashcardData
         })
 
-        res.status(200).json(updatedFlashcard)
+        return res.status(200).json(updatedFlashcard)
     }
     catch (error) {
         next(error)
@@ -85,7 +85,7 @@ router.delete("/:id((\\d+)", async (req: Request<FlashcardParams>, res: Response
             }
         })
 
-        res.json({message: "Flashcard deleted"})
+        return res.sendStatus(200)
     }
     catch (error) {
         next(error)

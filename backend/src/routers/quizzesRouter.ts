@@ -23,7 +23,7 @@ interface QuizUpdate {
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const quizzes = await prisma.quiz.findMany({})
-        res.json(quizzes)
+        return res.json(quizzes)
     }
     catch (error) {
         next(error)
@@ -40,10 +40,10 @@ router.get("/:id(\\d+)", async (req: Request<QuizParams>, res: Response, next: N
         })
 
         if (quiz) {
-            res.json(quiz)
+            return res.json(quiz)
         }
         else {
-            res.status(404).json({message: "Quiz not found"})
+            return res.sendStatus(404)
         }
     }
     catch (error) {
@@ -64,10 +64,10 @@ router.get("/:id(\\d+)/flashcards", async (req: Request<QuizParams>, res: Respon
         })
 
         if (quiz) {
-            res.json(quiz.flashcards)
+            return res.json(quiz.flashcards)
         }
         else {
-            res.status(404).json({message: "Quiz not found"})
+            return res.sendStatus(404)
         }
     }
     catch (error) {
@@ -80,7 +80,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
         const createdQuiz = await prisma.quiz.create({
             data: req.body as QuizCreate,
         })
-        res.status(201).json(createdQuiz)
+        return res.status(201).json(createdQuiz)
     }
     catch (error) {
         next(error)
@@ -99,7 +99,7 @@ router.patch("/:id(\\d+)", async (req: Request<QuizParams>, res: Response, next:
             data: updatedQuizData
         })
 
-        res.json(updatedQuiz)
+        return res.json(updatedQuiz)
     }
     catch (error) {
         next(error)
@@ -114,7 +114,7 @@ router.delete("/:id(\\d+)", async (req: Request<QuizParams>, res: Response, next
             }
         })
 
-        res.json({message: "Quiz deleted"})
+        return res.sendStatus(200)
     }
     catch (error) {
         next(error)

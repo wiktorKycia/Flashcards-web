@@ -28,10 +28,10 @@ router.get("/:id(\\d+)", async (req: Request<FolderParams>, res: Response, next:
         })
 
         if(folder){
-            res.json(folder)
+            return res.json(folder)
         }
         else{
-            res.status(404).json({message: "Folder not found"})
+            return res.sendStatus(404)
         }
     }
     catch (error) {
@@ -44,7 +44,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
         const createdFolder = await prisma.folder.create({
             data: req.body as FolderCreate
         })
-        res.status(201).json(createdFolder)
+        return res.status(201).json(createdFolder)
     }
     catch (error) {
         next(error)
@@ -63,7 +63,7 @@ router.patch("/:id(\\d+)", async (req: Request<FolderParams>, res: Response, nex
             data: updatedFolderData
         })
 
-        res.status(200).json(updatedFolder)
+        return res.status(200).json(updatedFolder)
     }
     catch (error) {
         next(error)
@@ -79,7 +79,7 @@ router.delete("/:id(\\d+)", async (req: Request<FolderParams>, res: Response, ne
             }
         })
 
-        res.status(200).json({message: "Folder deleted"})
+        return res.sendStatus(200)
     }
     catch (error) {
         next(error)
