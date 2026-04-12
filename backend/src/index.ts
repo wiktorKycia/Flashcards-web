@@ -8,7 +8,8 @@ import flashcardsRouter from "./routers/flashcardsRouter"
 import quizzesRouter from "./routers/quizzesRouter"
 import quizzesProgressRouter from "./routers/quizzesProgressRouter"
 import savedQuizzesRouter from "./routers/savedQuizzesRouter"
-import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library'
+import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library"
+import { MongoClient, Collection } from "mongodb"
 
 const myenv = dotenv.config({ path: '.env.app' })
 dotenvExpand.expand(myenv)
@@ -19,6 +20,26 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+
+const mongoClient = new MongoClient(process.env.MONGODB_URL!)
+let errorsCollection: Collection
+let requestsCollection: Collection
+let connectedMongo: boolean = false
+
+// Creating connection with MongoDB
+;(async () => {
+    try {
+        await mongoClient.connect();
+        const mongoDb = mongoClient.db("flashcards-app")
+        errorsCollection = mongoDb.collection("errorLogs")
+        requestsCollection = mongoDb.collection("requestLogs")
+        console.log("Connected to flashcards-app in MongoDB")
+        connectedMongo = true
+    }
+    catch (error) {
+        console.log("Could not connect to flashcards-app in MongoDB: ", error)
+    }
+})()
 
 app.use("/users", usersRouter)
 app.use("/folders", foldersRouter)
