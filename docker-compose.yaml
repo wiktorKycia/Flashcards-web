@@ -132,6 +132,23 @@ services:
     # disable printing logs in attached docker compose
     command: mongod --quiet --logpath /dev/null
 
+  expo:
+    build:
+      context: ./mobile
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+      - "19006:19006"
+    environment:
+      - EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
+      - EXPO_PUBLIC_API_URL=http://app:3000
+    volumes:
+      - ./mobile:/app
+      - /app/node_modules
+    depends_on:
+      app:
+        condition: service_started
+
 volumes:
   mysql-volume:
   mongo-volume:
