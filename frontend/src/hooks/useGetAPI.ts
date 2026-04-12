@@ -1,12 +1,11 @@
-import {useQuery} from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 const getData = async (url: string) => {
     const response = await fetch(url, {
         method: 'GET'
     })
 
-    if (!response.ok)
-    {
+    if (!response.ok) {
         throw new Error(`HTTP ${response.status}`)
     }
 
