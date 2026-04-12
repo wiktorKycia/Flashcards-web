@@ -21,7 +21,7 @@ model User {
   password    String
   path_to_img String?
 
-  createdQuizzez   Quiz[]
+  createdQuizzes   Quiz[]
   UserQuizProgress UserQuizProgress[]
   SavedQuiz        SavedQuiz[]
   Folder           Folder[]
@@ -33,7 +33,7 @@ model Quiz {
   description String?
 
   authorId Int
-  author   User @relation(fields: [authorId], references: [id])
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   flashcards       Flashcard[]
   UserQuizProgress UserQuizProgress[]
@@ -59,18 +59,18 @@ model UserQuizProgress {
   isKnown   Boolean @default(false)
 
   userId      Int
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizId      Int
-  quiz        Quiz      @relation(fields: [quizId], references: [id])
+  quiz        Quiz      @relation(fields: [quizId], references: [id], onDelete: Cascade)
   flashcardId Int
-  flashcard   Flashcard @relation(fields: [flashcardId], references: [id])
+  flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
 }
 
 model Folder {
   id     Int    @id @default(autoincrement())
   name   String
   userId Int
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   SavedQuiz SavedQuiz[]
 }
@@ -78,9 +78,9 @@ model Folder {
 model SavedQuiz {
   id       Int     @id @default(autoincrement())
   userId   Int
-  user     User    @relation(fields: [userId], references: [id])
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizId   Int
-  quiz     Quiz    @relation(fields: [quizId], references: [id])
+  quiz     Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
   folderId Int? // quiz może być w folderze, ale nie musi, może być też po prostu u użytkownika
-  folder   Folder? @relation(fields: [folderId], references: [id])
+  folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }

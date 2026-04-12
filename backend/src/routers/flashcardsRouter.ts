@@ -30,6 +30,9 @@ router.get("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, ne
         const flashcard = await prisma.flashcard.findUnique({
             where: {
                 id: flashcardId
+            },
+            include: {
+                UserQuizProgress: true
             }
         })
 
@@ -49,6 +52,9 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const createdFlashcard = await prisma.flashcard.create({
             data: req.body as FlashcardCreate,
+            include: {
+                UserQuizProgress: true
+            }
         })
 
         return res.status(201).json(createdFlashcard)
@@ -67,7 +73,10 @@ router.patch("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, 
             where: {
                 id: flashcardId,
             },
-            data: updatedFlashcardData
+            data: updatedFlashcardData,
+            include: {
+                UserQuizProgress: true
+            }
         })
 
         return res.status(200).json(updatedFlashcard)

@@ -59,7 +59,11 @@ router.get("/:id(\\d+)/flashcards", async (req: Request<QuizParams>, res: Respon
                 id: quizId,
             },
             include: {
-                flashcards: true
+                flashcards: {
+                    include: {
+                        UserQuizProgress: true
+                    }
+                }
             }
         })
 
