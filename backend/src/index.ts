@@ -105,17 +105,19 @@ app.use(async (err: unknown, _req: Request, res: Response, _next: NextFunction) 
     const errorMessage: string = err instanceof Error ? err.message : "Unknown error"
     const errorCode: string = typeof err === "object" && err !== null && "code" in err ? String(err.code) : "Unknown code"
 
-    try {
-        await errorsCollection.insertOne({
-            timestamp: new Date(),
-            code: errorCode,
-            message: errorMessage
-        })
-    }
-    catch (error2 : unknown) {
-        const mongoErrorMessage: string = error2 instanceof Error ? error2.message : "Unknown error"
-        const mongoErrorCode: string = typeof error2 === "object" && error2 !== null && "code" in error2 ? String(error2.code) : "Unknown code"
-        console.error(`MongoDB error: ${mongoErrorCode} - ${mongoErrorMessage}`)
+    if (connectedMongo) {
+        try {
+            await errorsCollection.insertOne({
+                timestamp: new Date(),
+                code: errorCode,
+                message: errorMessage
+            })
+        }
+        catch (error2 : unknown) {
+            const mongoErrorMessage: string = error2 instanceof Error ? error2.message : "Unknown error"
+            const mongoErrorCode: string = typeof error2 === "object" && error2 !== null && "code" in error2 ? String(error2.code) : "Unknown code"
+            console.error(`MongoDB error: ${mongoErrorCode} - ${mongoErrorMessage}`)
+        }
     }
 
     console.error(`App error: ${errorCode} - ${errorMessage}`)
