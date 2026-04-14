@@ -68,7 +68,7 @@ router.patch("/:id(\\d+)", async (req: Request<SavedQuizParams>, res: Response, 
     }
 })
 
-router.delete("/:id((\\d+)", async (req: Request<SavedQuizParams>, res: Response, next: NextFunction) => {
+router.delete("/:id(\\d+)", async (req: Request<SavedQuizParams>, res: Response, next: NextFunction) => {
     try {
         await prisma.savedQuiz.delete({
             where: {

@@ -78,7 +78,7 @@ router.patch("/:id(\\d+)", async (req: Request<QuizProgressParams>, res: Respons
     }
 })
 
-router.delete("/:id((\\d+)", async (req: Request<QuizProgressParams>, res: Response, next: NextFunction) => {
+router.delete("/:id(\\d+)", async (req: Request<QuizProgressParams>, res: Response, next: NextFunction) => {
     try {
         await prisma.userQuizProgress.delete({
             where: {

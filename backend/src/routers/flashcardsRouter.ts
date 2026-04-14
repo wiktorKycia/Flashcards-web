@@ -86,7 +86,7 @@ router.patch("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, 
     }
 })
 
-router.delete("/:id((\\d+)", async (req: Request<FlashcardParams>, res: Response, next: NextFunction) => {
+router.delete("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, next: NextFunction) => {
     try {
         await prisma.flashcard.delete({
             where: {

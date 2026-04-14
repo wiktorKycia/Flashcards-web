@@ -80,7 +80,7 @@ router.get("/:id(\\d+)/saved-quizzes", async (req: Request<UserParams>, res: Res
         })
 
         if (user) {
-            return res.json(user.savedQuiz)
+            return res.json(user.SavedQuiz)
         }
         else {
             return res.sendStatus(404)

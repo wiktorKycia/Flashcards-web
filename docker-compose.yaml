@@ -16,7 +16,7 @@ services:
       retries: 10
 
   migrate:
-    image: node:lts-alpine3.17
+    image: node:22-alpine
     working_dir: /usr/src/app
     volumes:
       - ./backend:/usr/src/app
@@ -33,7 +33,7 @@ services:
       context: ./backend
       dockerfile: ./Dockerfile
     volumes:
-      - ./backend/src:/app/src
+      - ./backend:/app
     restart: no
     ports:
       - "127.0.0.1:3000:3000"
@@ -76,7 +76,7 @@ services:
 ##            - ./static
 
   prisma-studio:
-    image: node:lts-alpine3.17
+    image: node:22-alpine
     working_dir: /usr/src/app
     volumes:
       - ./backend:/usr/src/app
