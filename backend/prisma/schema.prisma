@@ -65,6 +65,8 @@ model UserQuizProgress {
   quiz        Quiz      @relation(fields: [quizId], references: [id], onDelete: Cascade)
   flashcardId Int
   flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, flashcardId])
 }
 
 model UserQuizLike {
@@ -74,6 +76,8 @@ model UserQuizLike {
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizId  Int
   quiz    Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId])
 }
 
 model Folder {
@@ -93,4 +97,6 @@ model SavedQuiz {
   quiz     Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
   folderId Int? // quiz może być w folderze, ale nie musi, może być też po prostu u użytkownika
   folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId, folderId])
 }
