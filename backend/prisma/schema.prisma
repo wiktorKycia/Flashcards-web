@@ -71,9 +71,9 @@ model UserQuizLike {
   id      Int     @id @default(autoincrement())
   isLiked Boolean // like: true, dislike: false, neutral: no record
   userId  Int
-  user    User    @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizId  Int
-  quiz    Quiz    @relation(fields: [quizId], references: [id])
+  quiz    Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }
 
 model Folder {
