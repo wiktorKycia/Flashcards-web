@@ -33,7 +33,8 @@ services:
       context: ./backend
       dockerfile: ./Dockerfile
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
+      - ./backend/prisma:/app/prisma
     restart: no
     ports:
       - "127.0.0.1:3000:3000"
