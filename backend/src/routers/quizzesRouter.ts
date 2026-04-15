@@ -79,6 +79,30 @@ router.get("/:id(\\d+)/flashcards", async (req: Request<QuizParams>, res: Respon
     }
 })
 
+router.get("/:id(\\d+)/like", async (req: Request<QuizParams>, res: Response, next: NextFunction) => {
+    try {
+        const quizId = parseInt(req.params.id)
+        const quiz = await prisma.quiz.findUnique({
+            where: {
+                id: quizId,
+            },
+            include: {
+                UserQuizLike: true
+            }
+        })
+
+        if (quiz) {
+            return res.json(quiz.UserQuizLike)
+        }
+        else {
+            return res.sendStatus(404)
+        }
+    }
+    catch (error) {
+        next(error)
+    }
+})
+
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const createdQuiz = await prisma.quiz.create({
