@@ -1,27 +1,37 @@
 import js from '@eslint/js'
 import globals from 'globals'
+import tsPlugin from '@typescript-eslint/eslint-plugin';
 import { defineConfig } from 'eslint/config'
-import json from '@eslint/json'
 
 export default defineConfig([
+    js.configs.recommended,
+    ...tsPlugin.configs.recommended,
     {
-        files: ['**/*.{js,mjs,cjs}'],
-        plugins: { js },
-        extends: ['js/recommended'],
-        languageOptions: { globals: globals.node }
-    },
-    { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
-    {
-        files: ['**/*.json'],
-        ignores: ['package-lock.json'],
-        plugins: { json },
-        language: 'json/json',
-        extends: ['json/recommended']
-    },
-    {
-        files: ['**/*.jsonc'],
-        plugins: { json },
-        language: 'json/jsonc',
-        extends: ['json/recommended']
+        files: ['**/*.ts'],
+        languageOptions: {
+            globals: globals.node
+        },
+        rules: {
+            'no-console': 'warn',
+            'no-debugger': 'error',
+            'eqeqeq': ['error', 'always'],
+            'no-implicit-coercion': 'error',
+            'no-duplicate-imports': 'error',
+            '@typescript-eslint/no-unused-vars': [
+                'warn',
+                { argsIgnorePattern: '^_' }
+            ],
+            '@typescript-eslint/explicit-function-return-type': 'off',
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/consistent-type-imports': 'error',
+            '@typescript-eslint/no-misused-promises': [
+                'error',
+                { checksVoidReturn: false }
+            ],
+            '@typescript-eslint/no-floating-promises': 'error',
+            'curly': ['error', 'all'],
+            'no-var': 'error',
+            'prefer-const': 'error',
+        },
     }
 ])

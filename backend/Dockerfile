@@ -1,5 +1,5 @@
-FROM node:slim
-LABEL authors="wiktor"
+FROM node:22.18-slim
+LABEL authors="wiktor, Jan"
 
 RUN apt-get update -y \
 && apt-get install -y openssl
@@ -12,6 +12,8 @@ RUN npm ci
 
 COPY . .
 
+RUN npm run build
+
 EXPOSE 3000
 
-CMD ["sh", "-c", "npm start"]
+CMD ["node", "dist/index.js"]

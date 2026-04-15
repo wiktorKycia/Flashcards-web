@@ -1,3 +1,4 @@
 .nvmrc
 eslint.config.mjs
 node_modules
+dist
