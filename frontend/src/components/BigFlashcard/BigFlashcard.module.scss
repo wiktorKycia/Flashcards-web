@@ -1,0 +1,41 @@
+.BigFlashcardContainer {
+    perspective: 1000px;
+    width: 400px;
+    height: 250px;
+    margin: 2rem auto;
+}
+
+.BigFlashcard {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+
+    &.flipped {
+        transform: rotateY(180deg);
+    }
+
+    &Front,
+    &Back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        font-size: 2rem;
+        color: #333333;
+    }
+
+    &Back {
+        transform: rotateY(180deg);
+    }
+}
+

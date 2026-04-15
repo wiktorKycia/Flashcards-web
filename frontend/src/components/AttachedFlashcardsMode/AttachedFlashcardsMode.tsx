@@ -1,10 +1,10 @@
-
+import BigFlashcard from "../BigFlashcard"
 
 export default function AttachedFlashcardsMode() {
     return (
         <>
             <div>
-                <button></button> {/* oddzielny komponent na wielką fiszkę */}
+                <BigFlashcard front="Front" back="Back"/> {/* oddzielny komponent na wielką fiszkę */}
             </div>
             <div>
                 <label htmlFor="track_progress">Śledź postępy</label> {/*tylko dla użytkowników zalogowanych*/}
