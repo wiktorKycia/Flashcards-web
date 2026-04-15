@@ -1,4 +1,4 @@
-FROM node:22.18-slim
+FROM node:24-bookworm-slim
 LABEL authors="wiktor, Jan"
 
 RUN apt-get update -y \
