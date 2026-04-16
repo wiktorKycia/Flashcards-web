@@ -1,11 +1,10 @@
 import OpenAI from "openai";
 import dotenv from "dotenv"
-dotenv.config({path: '.env'})
+dotenv.config({path: '.env.app'})
 
 const token = process.env["GITHUB_TOKEN"];
 const endpoint = "https://models.github.ai/inference";
 const model = "openai/gpt-4.1-nano";
-// const model = "openai/o1-preview";
 
 const system_message = "Your job is to create tasks for english setbooks." + 
 "You will be given a word. You have to create a sentence, that would normally contain that word. " +
@@ -18,22 +17,23 @@ const system_message = "Your job is to create tasks for english setbooks." +
 
 const user_message = "overcome"
 
-export async function main() {
+async function sendAIRequest(systemMessage: string, userMessage: Record<string, any>) {
+    const client = new OpenAI({ baseURL: endpoint, apiKey: token });
 
-  const client = new OpenAI({ baseURL: endpoint, apiKey: token });
+    const response = await client.chat.completions.create({
+        messages: [
+            { role: 'system', content: systemMessage },
+            { role: 'user', content: JSON.stringify(userMessage) }
+        ],
+        model: model
+    })
 
-  const response = await client.chat.completions.create({
-    messages: [
-        { role:"system", content: system_message },
-        { role:"user", content: user_message }
-      ],
-      model: model
-    });
+    const content = response.choices?.[0]?.message?.content
 
-  console.log(response.choices[0].message.content);
+    if (!content) {
+        throw new Error("AI returned empty response")
+    }
+
+    return content
 }
-
-main().catch((err) => {
-  console.error("The sample encountered an error:", err);
-});
 
