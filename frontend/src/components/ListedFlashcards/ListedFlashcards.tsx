@@ -30,7 +30,7 @@ export default function ListedFlashcards(props: ListedFlashcardsProps) {
                 <button onClick={resetFilters}>Reset filters</button>
             </Container>
             <Container>
-                {props.flashcards.map((flashcard) => (
+                {props.flashcards.map((flashcard) => ( // dodać filtrowanie jakieś
                     <EditableFlashcard
                         key={flashcard.database_id}
                         front={flashcard.front}
