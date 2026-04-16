@@ -2,15 +2,20 @@ import BigFlashcard from "../BigFlashcard"
 import {useState} from "react";
 import type Flashcard from "../../types/Flashcard/Flashcard.ts";
 
-interface AttachedFlashcardsModeProps {
-    flashcards: Flashcard[]
-}
+// interface AttachedFlashcardsModeProps {
+//     flashcards: Flashcard[]
+// }
 
-export default function AttachedFlashcardsMode(props: AttachedFlashcardsModeProps) {
+export default function AttachedFlashcardsMode() {
     const [isTrackingProgress, setIsCheckingProgress] = useState<boolean>(false);
     const [flashcardsIterator, setFlashcardsIterator] = useState<number>(0);
 
-    const [flashcards, setFlashcards] = useState<Array<Flashcard>>(props.flashcards)
+    const [flashcards, setFlashcards] = useState<Array<Flashcard>>([{
+        front: "front",
+        back: "back",
+        langFront: "english",
+        langBack: "english"
+    }])
 
     function handleShuffle() {
         const array = [...flashcards];
