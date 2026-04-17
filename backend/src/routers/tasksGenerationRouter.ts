@@ -11,13 +11,13 @@ const model = "openai/gpt-4.1-nano";
 const router: Router = express.Router()
 const prisma = new PrismaClient()
 
-async function sendAIRequest(systemMessage: string, userMessage: Record<string, any>) {
+async function sendAIRequest(systemMessage: string, userMessage: string) {
     const client = new OpenAI({ baseURL: endpoint, apiKey: token });
 
     const response = await client.chat.completions.create({
         messages: [
             { role: 'system', content: systemMessage },
-            { role: 'user', content: JSON.stringify(userMessage) }
+            { role: 'user', content: userMessage}
         ],
         model: model,
         response_format: { type: "json_object" }
@@ -29,7 +29,7 @@ async function sendAIRequest(systemMessage: string, userMessage: Record<string, 
         throw new Error("AI returned empty response")
     }
 
-    return content
+    return JSON.parse(content)
 }
 
 async function chooseFlashcards(amount: number, quizId: number, languageSide: "FRONT" | "BACK"){
@@ -38,25 +38,28 @@ async function chooseFlashcards(amount: number, quizId: number, languageSide: "F
     if (languageSide === "FRONT") {
         quiz = await prisma.quiz.findOne({
             where: {
-                id: quizId,
+                id: quizId
             },
             select: {
                 quizId: quizId,
                 flashcards: {
-                    front: true
+                    select: {
+                        front: true
+                    }
                 }
             }
         })
-    }
-    else {
+    } else {
         quiz = await prisma.quiz.findOne({
             where: {
-                id: quizId,
+                id: quizId
             },
             select: {
                 quizId: quizId,
                 flashcards: {
-                    back: true
+                    select: {
+                        back: true
+                    }
                 }
             }
         })
@@ -64,27 +67,44 @@ async function chooseFlashcards(amount: number, quizId: number, languageSide: "F
 
     const flashcards = quiz.flashcards
     if (flashcards.length === 0) {
-        const error = new Error("Flashcards not found");
-        (error as any).statusCode = 404
+        const error = new Error("Flashcards not found")
+        ;(error as any).statusCode = 404
         throw error
     }
     const shuffled = flashcards.sort(() => 0.5 - Math.random())
 
-    return await shuffled.slice(0, amount)
+    if (languageSide === "FRONT") {
+        return shuffled.slice(0, amount).map((f: { front: string }) => f.front).join(", ")
+    }
+    else {
+        return shuffled.slice(0, amount).map((f: { back: string }) => f.back).join(", ")
+    }
 }
 
-router.post("/fill-gap-task", async (request: Request, res: Response, next: NextFunction) => {
+router.post("/fill-gap-task", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const systemMessage = "Your job is to create tasks for setbooks in particular language." +
-            "You will be given some words . You have to create a sentence, that would normally contain that word. " +
-            "Replace the word with a gap, so the student will have to guess it. " +
-            "For example: The given word is \"downhill\". " +
-            "The sentence should then look something like: \"The punctuality of the train service has been going _____ since the beginning of this year.\" ." +
-            "Second example: The given word is \"unjustified\". " +
-            "The ouput sentence: \"Her anger at his comment was completely ________, given the explanation he had offered.\" ." +
-            "You can think of any sentence, that was only the example. Remember that your answer should contain only the sentence with the gap marked as underscores."
+        const systemMessage =
+            'Your job is to create tasks for setbooks in particular language.' +
+            'You will be given some words in json format. For each provided word, create one natural sentence in the same language. ' +
+            'The sentence must match the word\'s difficulty level (e.g., A1, B2, C1) and provide enough context to understand the word\'s meaning. ' +
+            'Replace the word with a gap, so the student will have to guess it. ' +
+            'For example: The given word is "downhill". ' +
+            'The sentence should then look something like: "The punctuality of the train service has been going _____ since the beginning of this year." .' +
+            'Second example: The given word is "unjustified". ' +
+            'The ouput sentence: "Her anger at his comment was completely ________, given the explanation he had offered." .' +
+            'You can think of any sentence, that was only the example. Remember that your answer should contain only the sentence with the gap marked as underscores.' +
+            'Return the data as a JSON array of objects with the following structure:\n' +
+            '[\n' +
+            '  {\n' +
+            '    "word": "text",\n' +
+            '    "sentence": "text"\n' +
+            '  }\n' +
+            ']'
 
+        const flashcards: string = await chooseFlashcards(req.body.amount, req.body.quizId, req.body.languageSide)
+        const questions = await sendAIRequest(systemMessage, flashcards)
 
+        res.json(questions)
     }
     catch (error) {
         next(error)
