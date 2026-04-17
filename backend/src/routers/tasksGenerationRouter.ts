@@ -63,6 +63,11 @@ async function chooseFlashcards(amount: number, quizId: number, languageSide: "F
     }
 
     const flashcards = quiz.flashcards
+    if (flashcards.length === 0) {
+        const error = new Error("Flashcards not found");
+        (error as any).statusCode = 404
+        throw error
+    }
     const shuffled = flashcards.sort(() => 0.5 - Math.random())
 
     return await shuffled.slice(0, amount)
@@ -70,8 +75,8 @@ async function chooseFlashcards(amount: number, quizId: number, languageSide: "F
 
 router.post("/fill-gap-task", async (request: Request, res: Response, next: NextFunction) => {
     try {
-        const systemMessage = "Your job is to create tasks for english setbooks." +
-            "You will be given a word. You have to create a sentence, that would normally contain that word. " +
+        const systemMessage = "Your job is to create tasks for setbooks in particular language." +
+            "You will be given some words . You have to create a sentence, that would normally contain that word. " +
             "Replace the word with a gap, so the student will have to guess it. " +
             "For example: The given word is \"downhill\". " +
             "The sentence should then look something like: \"The punctuality of the train service has been going _____ since the beginning of this year.\" ." +
