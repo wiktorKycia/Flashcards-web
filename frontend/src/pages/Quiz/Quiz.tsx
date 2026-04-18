@@ -7,7 +7,7 @@ import ToolBar from "../../components/ToolBar";
 import styles from './Quiz.module.scss'
 import {useParams} from "react-router";
 import {useGetAPI} from "../../hooks/useGetAPI.ts";
-import ListedFlashcards from '../../components/ListedFlashcards'
+// import ListedFlashcards from '../../components/ListedFlashcards'
 
 interface QuizProps {
     quizName: string
@@ -45,7 +45,7 @@ export default function Quiz(props: QuizProps) {
                         <button>like</button>
                         <button>dislike</button>
                     </Container>
-                    <ListedFlashcards/>
+                    {/*<ListedFlashcards/>*/}
                 </div>
             </main>
             <ButtonTop/>
