@@ -1,9 +1,15 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
-const register = async (password: string, username?: string, email?: string) => {
+interface RegisterVariables {
+    password: string
+    name: string
+    email: string
+}
+
+const register = async ({ password, name, email }: RegisterVariables) => {
     const response = await fetch('/auth/register', {
         method: 'POST',
-        body: JSON.stringify({name: username, email: email, password: password}),
+        body: JSON.stringify({name: name, email: email, password: password}),
         headers: {
             "Content-Type": "application/json"
         }
@@ -16,9 +22,8 @@ const register = async (password: string, username?: string, email?: string) => 
     return response.json()
 }
 
-export const useRegister = (password: string, username?: string, email?: string) => {
-    return useQuery({
-        queryKey: ['userRegister', password, username, email],
-        queryFn: () => register(password, username, email)
+export const useRegister = () => {
+    return useMutation({
+        mutationFn: register
     })
 }
