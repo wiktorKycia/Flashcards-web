@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="50"
+   height="50"
+   viewBox="0 0 13.229 13.229"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="lingoSpark-logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="11.737559"
+     inkscape:cx="29.563216"
+     inkscape:cy="27.774088"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2" />
+  <defs
+     id="defs1" />
+  <rect
+     style="fill:#00c321;fill-opacity:1;stroke:#00c321;stroke-width:1.3229;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect1-3"
+     width="7.3484683"
+     height="4.3504734"
+     x="2.6358044"
+     y="3.6265006"
+     inkscape:label="rect1-3" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2">
+    <rect
+       style="fill:#e1ebeb;fill-opacity:1;stroke:#e1ebeb;stroke-width:1.3229;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1"
+       width="7.3484683"
+       height="4.3504734"
+       x="4.0799775"
+       y="4.9816308" />
+    <path
+       id="text1"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:5.64437px;font-family:'TeX Gyre Chorus';-inkscape-font-specification:'TeX Gyre Chorus Medium';writing-mode:lr-tb;direction:ltr;fill:#00c321;fill-opacity:1;stroke:none;stroke-width:1.3229;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 8.5025669,4.7679316 c -0.107243,0 -0.2032485,0.011012 -0.2992028,0.033589 -0.152398,0.039511 -0.423273,0.2315559 -0.6490478,0.4573307 -0.2765741,0.2822185 -0.3725908,0.5417612 -0.5927212,1.5916143 -0.152398,0.722479 -0.2991368,0.931714 -0.6547321,0.931714 -0.045155,0 -0.1130929,-4e-5 -0.1751809,-0.00568 -0.079021,0.079021 -0.112736,0.11858 -0.1974015,0.225823 l 0.5529308,-0.017053 0.8640191,0.027905 1.111546,0.045475 c 0.02066,0 0.040911,-3.89e-4 0.059944,-0.00103 -0.073746,-0.090426 -0.1819975,-0.188492 -0.3358926,-0.311088 -0.099161,0.00223 -0.2110396,0.00229 -0.3389931,0.00155 H 6.7807299 L 6.9331734,7.6013226 C 7.232325,7.3247486 7.2721322,7.2514546 7.4132414,6.6644406 7.5769282,5.9645387 7.6556037,5.6541706 7.7289805,5.4340402 7.8136455,5.1969767 7.9606162,5.0898795 8.1976798,5.0898795 c 0.073377,0 0.1239503,-4.368e-4 0.332792,0.010852 L 8.7506106,4.7849846 C 8.6377232,4.7736956 8.5815881,4.7679316 8.5025669,4.7679316 Z M 8.1868279,7.7465238 C 8.4824459,7.7398738 8.6627095,7.7128068 8.8007362,7.6230188 8.7423352,7.5725798 8.6730996,7.5170018 8.5914492,7.4530048 8.179411,7.1312768 8.111898,7.0352958 8.111898,6.7925888 c 0,-0.366884 0.2762402,-0.683154 0.6092575,-0.683154 0.2370631,0 0.321863,0.101776 0.383951,0.463015 L 9.4776889,6.3068368 C 9.4438229,5.9963966 9.2745514,5.8443381 8.9754003,5.8443381 c -0.5813691,0 -1.241769,0.6431867 -1.241769,1.2019787 0,0.253996 0.1185891,0.440526 0.445962,0.694522 0.00254,0.00201 0.00472,0.00368 0.00723,0.00568 z m 0.6139083,-0.123505 c 0.075834,0.065494 0.1337523,0.121682 0.1772479,0.17363 0.00151,-0.00302 0.00263,-0.0057 0.00413,-0.00879 0.067732,-0.12982 0.2429589,-0.51931 0.3276245,-0.733796 l -0.062011,-0.107485 c -0.1743752,0.367529 -0.2800327,0.567824 -0.4469955,0.676436 z m 0.1772479,0.17363 c -0.093586,0.187105 -0.2078956,0.252583 -0.4552636,0.260963 0.1071913,0.131437 0.1421083,0.247169 0.1421083,0.399971 0,0.44026 -0.4230852,0.829913 -0.9141445,0.829913 -0.2427075,0 -0.4914825,-0.107652 -0.6438802,-0.276983 -0.1185316,-0.12982 -0.1636153,-0.248252 -0.2087702,-0.496604 l -0.089916,0.062011 -0.2485605,0.587037 c 0.1975526,0.265285 0.4630297,0.389635 0.8299131,0.389635 0.8635871,0 1.7099516,-0.7058 1.7099516,-1.422634 0,-0.127437 -0.027079,-0.220611 -0.121438,-0.333309 z" />
+  </g>
+</svg>
