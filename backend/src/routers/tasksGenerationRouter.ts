@@ -141,4 +141,38 @@ router.post("/first-letter-gap-task", async (req: Request, res: Response, next: 
     }
 })
 
+router.post("/multiple-choice-task", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const systemMessage =
+            'Your job is to create tasks for setbooks in particular language.' +
+            'You will be given some phrases in json format. For each 3 of provided phrases, choose one phrase and create one natural sentence in the same language with that phrase. ' +
+            'The rest of the phrases will serve as incorrect answers in the given multiple choice tasks. ' +
+            'The sentence must match the phrase\'s difficulty level (e.g., A1, B2, C1) and provide enough context to understand the phrase\'s meaning. ' +
+            'Replace the phrase with a gap, so the student will have to guess it. ' +
+            'For example: The given pharses are "downhill, left, up in flames". ' +
+            'The sentence should then look something like: "The punctuality of the train service has been going _____ since the beginning of this year." .' +
+            'Second example: The given phrases are "unjustified, full of soup, too much blue". ' +
+            'The ouput sentence: "Her anger at his comment was completely ________, given the explanation he had offered." .' +
+            'You can think of any sentence, that was only the example. Remember that your answer should contain sentences with the gap marked as underscores and phrases as answers for each question.' +
+            'Return the data as a JSON array of objects with the following structure:\n' +
+            '[\n' +
+            '  {\n' +
+            '    "word1": "text",\n' +
+            '    "word2": "text",\n' +
+            '    "word3": "text",\n' +
+            '    "correctAnswer": "text",\n' +
+            '    "sentence": "text"\n' +
+            '  }\n' +
+            ']'
+
+        const flashcards: string = await chooseFlashcards(req.body.amount * 3, req.body.quizId, req.body.languageSide)
+        const questions = await sendAIRequest(systemMessage, flashcards)
+
+        res.json(questions)
+    }
+    catch (error) {
+        next(error)
+    }
+})
+
 export default router
