@@ -8,6 +8,7 @@ import flashcardsRouter from "./routers/flashcardsRouter"
 import quizzesRouter from "./routers/quizzesRouter"
 import quizzesProgressRouter from "./routers/quizzesProgressRouter"
 import savedQuizzesRouter from "./routers/savedQuizzesRouter"
+import authRouter from './routers/auth'
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library"
 import { MongoClient, Collection } from "mongodb"
 

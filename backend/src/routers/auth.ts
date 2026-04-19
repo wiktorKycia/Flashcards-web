@@ -114,3 +114,5 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
         next(error) // tu nie wiem jakich błędów się spodziewać
     }
 })
+
+export default router
