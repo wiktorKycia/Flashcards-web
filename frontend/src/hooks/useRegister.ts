@@ -7,7 +7,7 @@ interface RegisterVariables {
 }
 
 const register = async ({ password, name, email }: RegisterVariables) => {
-    const response = await fetch('/auth/register', {
+    const response = await fetch('/api/auth/register', {
         method: 'POST',
         body: JSON.stringify({name: name, email: email, password: password}),
         headers: {
