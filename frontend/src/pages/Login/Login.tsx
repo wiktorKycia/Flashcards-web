@@ -5,11 +5,16 @@ import { useLogin } from '@/hooks/useLogin.ts'
 import Header from '@/components/Header'
 import ToolBar from '@/components/ToolBar'
 import styles from './Login.module.scss'
+import type { NavigateFunction } from 'react-router'
 
 export default function Login() {
+    const navigate: NavigateFunction = useNavigate()
+    const {login, token} = useAuth()
+    if (token)
+    {
+        navigate('/')
+    }
     const [form, setForm] = useState({login: '', password: ''})
-    const {login} = useAuth()
-    const navigate = useNavigate()
 
     const loginMutation = useLogin()
     
