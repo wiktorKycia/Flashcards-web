@@ -13,7 +13,7 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function Quiz() {
     const id: number = parseInt(useParams().id as string)
-    const {data, isLoading, isError} = useGetAPI(`/api/quiz/${id}`)
+    const {data, isLoading, isError} = useGetAPI(`/api/quizzes/${id}`)
     console.log(data, isLoading, isError)
 
     let isUserAuthor = false
