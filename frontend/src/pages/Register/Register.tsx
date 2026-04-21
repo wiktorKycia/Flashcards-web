@@ -4,11 +4,19 @@ import { useRegister } from '@/hooks/useRegister.ts'
 import Header from '@/components/Header'
 import ToolBar from '@/components/ToolBar'
 import styles from './Register.module.scss'
+import { useAuth } from '@/context/AuthContext'
+import type { NavigateFunction } from 'react-router'
 
 export default function Register() {
-    const [form, setForm] = useState({ name: '', email: '', password: '' });
-    const navigate = useNavigate();
+    const navigate: NavigateFunction = useNavigate();
+    const isLoggedIn: boolean = !!useAuth().token;
 
+    if(isLoggedIn)
+    {
+        navigate('/')
+    }
+
+    const [form, setForm] = useState({ name: '', email: '', password: '' });
     const registerMutation = useRegister()
 
 

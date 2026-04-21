@@ -8,7 +8,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children } : {children: ReactNode}) {
+export default function AuthProvider({ children } : {children: ReactNode}) {
     const [token, setToken] = useState(localStorage.getItem('token'))
 
     function login(newToken: string)
