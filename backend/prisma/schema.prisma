@@ -55,7 +55,7 @@ model Flashcard {
 model UserQuizProgress {
   id        Int     @id @default(autoincrement())
   isStarred Boolean @default(false)
-  isKnown   Boolean @default(false)
+  isKnown   Boolean @default(false) // TODO: wywalić lub przedyskutować jak będziemy oznaczać, że dane słówko jest już znane
 
   userId      Int
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
