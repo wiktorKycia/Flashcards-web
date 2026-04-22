@@ -6,7 +6,7 @@
     "scripts": {
         "start": "npx prisma generate && node dist/index.js",
         "build": "tsc",
-        "dev": "npx prisma generate && tsx watch src/index.ts",
+        "dev": "npx prisma generate && nodemon --watch src --ext ts --exec tsx src/index.ts",
         "db:deploy": "npx prisma migrate deploy",
         "inspect": "node --inspect dist/index.js",
         "format": "prettier --write .",
