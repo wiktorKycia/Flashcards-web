@@ -54,8 +54,6 @@ export default function Quiz() {
                                     <button>usuń</button>
                                 </>
                             )}
-
-                            {/* tutaj opcje: edytuj (twórca), kopiuj (zalogowany), eksport (wszyscy), usuń (twórca) */}
                         </Container>
                         <Container cssClassName={'container-vertical-borderless'}>
                             <button>ucz się</button>
