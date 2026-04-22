@@ -190,17 +190,18 @@ router.post("/first-letter-gap-task", async (req: Request, res: Response, next: 
 router.post("/multiple-choice-task", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const systemMessage =
-            'Your job is to create tasks for setbooks in particular language.' +
-            'You will be given some phrases in json format. For each 3 of provided phrases, choose one phrase and create one natural sentence in the same language with that phrase. ' +
+            'Your job is to create tasks for setbooks in particular language.\n' +
+            'You will be given some phrases. For each 3 of provided phrases, choose one phrase and create one natural sentence in the same language with that phrase. ' +
             'The rest of the phrases will serve as incorrect answers in the given multiple choice tasks. ' +
             'The sentence must match the phrase\'s difficulty level (e.g., A1, B2, C1) and provide enough context to understand the phrase\'s meaning. ' +
-            'Replace the phrase with a gap, so the student will have to guess it. ' +
-            'For example: The given pharses are "task1: downhill, left, up in flames". ' +
-            'The sentence should then look something like: "The punctuality of the train service has been going _____ since the beginning of this year." .' +
-            'Second example: The given phrases are "task1: completely unjustified, full of soup, too much blue". ' +
-            'The ouput sentence: "Her anger at his comment was ________, given the explanation he had offered." .' +
-            'You can think of any sentence, that was only the example. Remember that your answer should contain sentences with the gap marked as underscores and phrases as answers for each question. ' +
-            'Use only one gap for phrases with several words. This is incredibly important.' +
+            'Replace the phrase with a gap, so the student will have to guess it.\n' +
+            'For example: The given phrases are "downhill, left, up in flames". ' +
+            'The sentence should then look something like: "The punctuality of the train service has been going _____ since the beginning of this year.".\n' +
+            'Second example: The given phrases are "completely unjustified, full of soup, too much blue". ' +
+            'The output sentence: "Her anger at his comment was ________, given the explanation he had offered.".\n' +
+            'You can think of any sentence, that was only the example. Remember that your answer should contain sentences with the gap marked as underscores and phrases as answers for each question.\n' +
+            'RULE FOR MULTI_WORD PHRASES:\n' +
+            '- multi-word phrases must NOT create multiple gaps or word-by-word gaps. They must always become one continuous gap (e.g. p_____ not p____ o___ c___ for the phrase "piece of cake").\n' +
             'Return the data as a JSON array of objects with the following structure:\n' +
             '{\n' +
             '   data: [\n' +
