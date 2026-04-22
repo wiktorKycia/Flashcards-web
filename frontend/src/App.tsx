@@ -12,7 +12,7 @@ function App() {
         <AuthProvider>
             <Routes>
                 <Route path='/' element={<Home/>}/>
-                <Route path='/profile/' element={<UserSettings/>}>
+                <Route path='/user/' element={<UserSettings/>}>
                     <Route path=":id" element={<UserProfile/>}/>
                 </Route>
                 <Route path='/quiz/' >
