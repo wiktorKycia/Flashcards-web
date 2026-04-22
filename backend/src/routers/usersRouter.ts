@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import express, { Router, Request, Response, NextFunction } from "express"
 import bcrypt from "bcrypt"
+import fs from 'fs/promises'
 
 const router: Router = express.Router()
 const prisma = new PrismaClient()
@@ -17,6 +18,43 @@ interface UserCreate {
     password: string
     path_to_img?: string
 }
+
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.query.userId ? parseInt(req.query.userId as string): undefined
+        if (!userId)
+        {
+            return res.sendStatus(400)
+        }
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                name: true,
+                path_to_img: true
+            },
+        })
+
+        if (user) {
+            let imageBase64 = null
+
+            if (user.path_to_img) {
+                const imageBuffer = await fs.readFile(user.path_to_img)
+                imageBase64 = imageBuffer.toString('base64')
+            }
+
+            return res.json({
+                name: user.name,
+                image: imageBase64 ? `data:image/jpeg;base64,${imageBase64}` : null
+            })
+        }
+        else {
+            return res.sendStatus(404)
+        }
+    }
+    catch(error) {
+        next(error)
+    }
+})
 
 router.get("/:id(\\d+)", async (req: Request<UserParams>, res: Response, next: NextFunction) => {
     try {

@@ -24,6 +24,34 @@ interface FlashcardUpdate {
     side2: string
 }
 
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const quizId = req.query.quizId ? parseInt(req.query.quizId as string) : undefined
+        if (!quizId)
+        {
+            return res.sendStatus(400)
+        }
+
+        const flashcards = await prisma.flashcard.findMany({
+            where: {
+                quizId: quizId
+            }
+        })
+
+        if (flashcards)
+        {
+            return res.json(flashcards)
+        }
+        else
+        {
+            return res.sendStatus(404)
+        }
+    }
+    catch (error) {
+        next(error)
+    }
+})
+
 router.get("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, next: NextFunction) => {
     try {
         const flashcardId: number = parseInt(req.params.id)
