@@ -18,10 +18,12 @@ export default function Quiz() {
 
     let isUserAuthor = false
 
-    const isLoggedIn = !!useAuth().token
-    if (isLoggedIn)
+    const authInfo = useAuth()
+
+    const isLoggedIn = !!authInfo.token
+    if (isLoggedIn && authInfo.user != null && data != undefined)
     {
-        isUserAuthor = true; // tutaj w przyszłości dorobić zapytanie do backendu
+        isUserAuthor = authInfo.user.id == data.quiz.authorId
     }
 
     return (
