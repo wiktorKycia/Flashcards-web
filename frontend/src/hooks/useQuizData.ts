@@ -13,7 +13,7 @@ const getData = async (quizId: number): Promise<QuizData> => {
         const flashcardsResponse = await fetch(`/api/flashcards?quizId=${quizId}`)
         const flashcards: Flashcard[] = await flashcardsResponse.json()
 
-        const quizAuthorResponse = await fetch(`/api/users?userId=${quiz.authorId}`)
+        const quizAuthorResponse = await fetch(`/api/users/?userId=${quiz.authorId}`)
         const quizAuthor: QuizAuthor = await quizAuthorResponse.json()
 
         return {quiz, flashcards, quizAuthor}
