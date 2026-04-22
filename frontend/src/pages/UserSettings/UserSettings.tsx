@@ -1,6 +1,9 @@
 import styles from './UserSettings.module.scss'
 import { useAuth } from '@/context/AuthContext.tsx'
 import { useNavigate } from 'react-router-dom'
+import Container from '@/components/Container'
+import LoadingSpinner from '@/components/LoadingSpinner'
+import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
 
 export default function UserSettings()
 {
@@ -13,6 +16,10 @@ export default function UserSettings()
         navigate('/login')
     }
 
+    const {data, isLoading, isError} = useSavedQuizzes(auth.user?.id as number)
+    console.log(data)
+
+
     return (
         <div className={styles.UserSettings}>
 
@@ -21,6 +28,23 @@ export default function UserSettings()
             <button onClick={auth.logout}>Logout</button>
             <button>Reset password</button>
             <button>Edit username</button>
+
+            <Container>
+                {isError && (
+                    <p>wystąpił błąd</p>
+                )}
+                {isLoading && (
+                    <LoadingSpinner/>
+                )}
+                {!isError && !isLoading && data && (
+                    data.map((quiz, index) => {
+                        console.log(quiz)
+                        return (<div key={index}>
+                            {quiz.name} {quiz.description}
+                        </div>)
+                    })
+                )}
+            </Container>
         </div>
     )
 }
