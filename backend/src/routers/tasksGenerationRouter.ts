@@ -129,9 +129,7 @@ async function chooseFlashcards(questionsAmount: number, quizId: number, languag
 
     flashcards = quiz.flashcards
     if (flashcards.length === 0) {
-        const error = new Error("Flashcards not found")
-        ;(error as any).statusCode = 404
-        throw error
+        throw new Error("Flashcards not found")
     }
     else if ((isSingleChoice && flashcards.length < questionsAmount * 3) || flashcards.length < questionsAmount) {
         warning = "W quizie nie ma wystarczającej liczby fiszek do utworzenia wymaganej liczby pytań"
@@ -220,6 +218,10 @@ router.post("/fill-gap-task", async (req: Request, res: Response, next: NextFunc
         }
     }
     catch (error) {
+        if (error instanceof Error && error.message === "Flashcards not found") {
+            res.sendStatus(404)
+        }
+
         next(error)
     }
 })
@@ -242,6 +244,10 @@ router.post("/first-letter-gap-task", async (req: Request, res: Response, next: 
         }
     }
     catch (error) {
+        if (error instanceof Error && error.message === "Flashcards not found") {
+            res.sendStatus(404)
+        }
+
         next(error)
     }
 })
@@ -292,6 +298,10 @@ router.post("/single-choice-task", async (req: Request, res: Response, next: Nex
         }
     }
     catch (error) {
+        if (error instanceof Error && error.message === "Flashcards not found") {
+            res.sendStatus(404)
+        }
+
         next(error)
     }
 })

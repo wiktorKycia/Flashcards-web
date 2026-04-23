@@ -53,6 +53,18 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
         return res.sendStatus(400)
     }
 
+    if (err.message === "Missing GITHUB_TOKEN in .env.app file") {
+        return res.status(500).json({
+            error: "Nie skonfigurowano tokena GitHub wymaganego do korzystania z modeli AI"
+        })
+    }
+
+    if (err.message === "All models failed or returned empty responses") {
+        return res.status(503).json({
+            error: "Wszystkie modele AI są chwilowo niedostępne lub osiągnęły limity. Spróbuj ponownie za około minutę"
+        })
+    }
+
     return res.sendStatus(500)
 })
 
