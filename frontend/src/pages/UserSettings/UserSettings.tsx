@@ -11,7 +11,7 @@ export default function UserSettings()
     const auth = useAuth()
 
     const isLoggedIn = !!auth.token
-    if(isLoggedIn)
+    if(!isLoggedIn)
     {
         navigate('/login')
     }
