@@ -93,41 +93,13 @@ async function sendAIRequest(systemMessage: string, userMessage: string) {
 }
 
 async function chooseFlashcards(questionsAmount: number, quizId: number, languageSide: "FRONT" | "BACK", isSingleChoice: boolean = false){
-    let quiz: any
-    let flashcards: any
     let warning: string | null = null
+    const flashcards = await prisma.flashcard.findMany({
+        where: {
+            quizId: quizId
+        }
+    })
 
-    if (languageSide === "FRONT") {
-        quiz = await prisma.quiz.findOne({
-            where: {
-                id: quizId
-            },
-            select: {
-                quizId: quizId,
-                flashcards: {
-                    select: {
-                        front: true
-                    }
-                }
-            }
-        })
-    } else {
-        quiz = await prisma.quiz.findOne({
-            where: {
-                id: quizId
-            },
-            select: {
-                quizId: quizId,
-                flashcards: {
-                    select: {
-                        back: true
-                    }
-                }
-            }
-        })
-    }
-
-    flashcards = quiz.flashcards
     if (flashcards.length === 0) {
         throw new Error("Flashcards not found")
     }
@@ -151,9 +123,9 @@ async function chooseFlashcards(questionsAmount: number, quizId: number, languag
             for (let i = 0; i < questionsAmount * 3; i += 3){
                 const taskIndex = i / 3 + 1
                 result.data[`task${taskIndex}`] = {
-                    "phrase1": shuffled[i].front,
-                    "phrase2": shuffled[i + 1].front,
-                    "phrase3": shuffled[i + 2].front
+                    "phrase1": shuffled[i]!.front,
+                    "phrase2": shuffled[i + 1]!.front,
+                    "phrase3": shuffled[i + 2]!.front
                 }
             }
 
@@ -176,12 +148,12 @@ async function chooseFlashcards(questionsAmount: number, quizId: number, languag
                 "data": {}
             }
 
-            for (let i = 0; i < questionsAmount; i += 3){
+            for (let i = 0; i < questionsAmount * 3; i += 3){
                 const taskIndex = i / 3 + 1
                 result.data[`task${taskIndex}`] = {
-                    "phrase1": shuffled[i].back,
-                    "phrase2": shuffled[i + 1].back,
-                    "phrase3": shuffled[i + 2].back
+                    "phrase1": shuffled[i]!.back,
+                    "phrase2": shuffled[i + 1]!.back,
+                    "phrase3": shuffled[i + 2]!.back
                 }
             }
 
@@ -218,7 +190,7 @@ router.post("/fill-gap", async (req: Request, res: Response, next: NextFunction)
         }
     }
     catch (error) {
-        if (error instanceof Error && error.message === "Flashcards not found") {
+        if (error instanceof Error && (error.message === "Flashcards not found" || error.message === "Quiz not found")) {
             res.sendStatus(404)
         }
 
