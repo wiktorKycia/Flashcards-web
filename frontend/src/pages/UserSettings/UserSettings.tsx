@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Container from '@/components/Container'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
+import { useEffect } from 'react'
 
 export default function UserSettings()
 {
@@ -11,10 +12,12 @@ export default function UserSettings()
     const auth = useAuth()
 
     const isLoggedIn = !!auth.token
-    if(!isLoggedIn)
-    {
-        navigate('/login')
-    }
+    useEffect(() => {
+        if(!isLoggedIn)
+        {
+            navigate('/login')
+        }
+    }, [isLoggedIn, navigate])
 
     const {data, isLoading, isError} = useSavedQuizzes(auth.user?.id as number)
     console.log(data)
