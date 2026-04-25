@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 const getData = async (userId: number): Promise<UserInfo> => {
-    const quizResponse = await fetch(`/api/user-with-quizzes?userId=${userId}`)
+    const quizResponse = await fetch(`/api/user-with-quizzes?userId=${userId}`) // rename this path
 
     return {
         name: "Mock",
