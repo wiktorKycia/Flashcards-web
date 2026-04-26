@@ -24,6 +24,7 @@ model User {
   UserQuizProgress UserQuizProgress[]
   SavedQuiz        SavedQuiz[]
   Folder           Folder[]
+  UserQuizLike     UserQuizLike[]
 }
 
 model Quiz {
@@ -37,14 +38,16 @@ model Quiz {
   flashcards       Flashcard[]
   UserQuizProgress UserQuizProgress[]
   SavedQuiz        SavedQuiz[]
+  UserQuizLike     UserQuizLike[]
 }
 
 model Flashcard {
-  id        Int    @id @default(autoincrement())
-  language1 String
-  language2 String
-  front     String
-  back      String
+  id            Int     @id @default(autoincrement())
+  starred       Boolean @default(false)
+  frontLanguage String
+  backLanguage  String
+  front         String
+  back          String
 
   quizId Int
   quiz   Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
@@ -63,6 +66,19 @@ model UserQuizProgress {
   quiz        Quiz      @relation(fields: [quizId], references: [id], onDelete: Cascade)
   flashcardId Int
   flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, flashcardId])
+}
+
+model UserQuizLike {
+  id      Int     @id @default(autoincrement())
+  isLiked Boolean // like: true, dislike: false, neutral: no record
+  userId  Int
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quizId  Int
+  quiz    Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId])
 }
 
 model Folder {
@@ -82,4 +98,6 @@ model SavedQuiz {
   quiz     Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
   folderId Int? // quiz może być w folderze, ale nie musi, może być też po prostu u użytkownika
   folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId, folderId])
 }

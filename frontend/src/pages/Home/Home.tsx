@@ -1,15 +1,25 @@
-import { useGetAPI } from '../../hooks/useGetAPI.ts'
+import {useGetAPI} from "../../hooks/useGetAPI.ts";
+import Header from '../../components/Header'
 
-export default function Home() {
-    const { data, isLoading, isError } = useGetAPI('http://localhost:3000/')
+export default function Home()
+{
+    const {data, isLoading, isError} = useGetAPI('http://localhost:3000/')
 
     console.log(data)
 
     return (
         <>
-            {isLoading && <div>Loading</div>}
-            {isError && <div>Error</div>}
-            {!isLoading && !isError && data && <div>{data.content}</div>}
+            <Header/>
+            {isLoading && (
+                <div>Loading</div>
+            )}
+            {isError && (
+                <div>Error</div>
+            )}
+            {!isLoading && !isError && data && (
+                <div>{data.content}</div>
+            )}
         </>
+
     )
 }

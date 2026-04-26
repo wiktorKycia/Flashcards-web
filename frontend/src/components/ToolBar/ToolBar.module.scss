@@ -1,0 +1,14 @@
+.ToolBar
+{
+    float: left;
+    width: 10%;
+
+    .Container
+    {
+        border: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+

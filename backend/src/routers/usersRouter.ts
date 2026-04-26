@@ -8,7 +8,11 @@ const prisma = new PrismaClient()
 
 interface UserParams {
     id: string
-    password: string
+}
+
+interface UserQuizLikeParams {
+    quizId: string
+    userId: string
 }
 
 interface UserCreate {
@@ -113,6 +117,29 @@ router.get("/:id(\\d+)/folders", async (req: Request<UserParams>, res: Response,
         }
     }
     catch(error) {
+        next(error)
+    }
+})
+
+router.get("/:userId(\\d+)/quizzes/:quizId(\\d+)", async (req: Request<UserQuizLikeParams>, res: Response, next: NextFunction) => {
+    try {
+        const quizId = parseInt(req.params.quizId)
+        const userId = parseInt(req.params.userId)
+        const quizLike = await prisma.userQuizLike.findUnique({
+            where: {
+                userId: userId,
+                quizId: quizId,
+            }
+        })
+
+        if (quizLike) {
+            return res.json(quizLike)
+        }
+        else {
+            return res.sendStatus(404)
+        }
+    }
+    catch (error) {
         next(error)
     }
 })
