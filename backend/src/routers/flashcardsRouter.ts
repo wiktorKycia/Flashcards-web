@@ -10,18 +10,20 @@ interface FlashcardParams {
 }
 
 interface FlashcardCreate {
-    language1: string
-    language2: string
-    side1: string
-    side2: string
+    starred?: boolean
+    frontLanguage: string
+    backLanguage: string
+    front: string
+    back: string
     quizId: number
 }
 
 interface FlashcardUpdate {
-    language1: string
-    language2: string
-    side1: string
-    side2: string
+    starred: boolean
+    frontLanguage: string
+    backLanguage: string
+    front: string
+    back: string
 }
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {

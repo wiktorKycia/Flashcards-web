@@ -8,8 +8,9 @@ import flashcardsRouter from "./routers/flashcardsRouter"
 import quizzesRouter from "./routers/quizzesRouter"
 import quizzesProgressRouter from "./routers/quizzesProgressRouter"
 import savedQuizzesRouter from "./routers/savedQuizzesRouter"
+import quizzesLikesRouter from "./routers/quizzesLikesRouter"
+import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library'
 import authRouter from './routers/auth'
-import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library"
 import { MongoClient, Collection } from "mongodb"
 
 const myenv = dotenv.config({ path: '.env.app' })
@@ -94,6 +95,7 @@ app.use("/api/saved-quizzes", savedQuizzesRouter)
 app.use("/api/flashcards", flashcardsRouter)
 app.use("/api/quizzes", quizzesRouter)
 app.use("/api/quizzes-progress", quizzesProgressRouter)
+app.use("/api/quizzes-likes", quizzesLikesRouter)
 
 app.get('/', (_req: Request, res: Response) => {
     res.status(200).json({content: "Hello world!"})

@@ -20,10 +20,28 @@ interface QuizUpdate {
     description?: string
 }
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (_req: Request, res: Response, next: NextFunction) => {
     try {
-        const quizzes = await prisma.quiz.findMany({})
-        return res.json(quizzes)
+        const quizzes = await prisma.quiz.findMany({
+            include: {
+                UserQuizLike: true
+            }
+        })
+
+        const result = quizzes
+            .map((quiz: any) => {
+                const likes: number = quiz.UserQuizLike.filter((x: any) => x.isLiked).length;
+                const dislikes: number = quiz.UserQuizLike.filter((x: any) => !x.isLiked).length;
+
+                return {
+                    ...quiz,
+                    likes,
+                    dislikes
+                }
+            })
+            .sort((a: any, b: any) => b.likes - a.likes)
+
+        return res.json(result)
     }
     catch (error) {
         next(error)
@@ -40,7 +58,26 @@ router.get("/:id(\\d+)", async (req: Request<QuizParams>, res: Response, next: N
         })
 
         if (quiz) {
-            return res.json(quiz)
+            const [likes, dislikes] = await Promise.all([
+                prisma.userQuizLike.count({
+                    where: {
+                        quizId: quizId,
+                        isLiked: true
+                    }
+                }),
+                prisma.userQuizLike.count({
+                    where: {
+                        quizId: quizId,
+                        isLiked: false
+                    }
+                })
+            ])
+
+            return res.json({
+                ...quiz,
+                likes,
+                dislikes
+            })
         }
         else {
             return res.sendStatus(404)
@@ -103,7 +140,26 @@ router.patch("/:id(\\d+)", async (req: Request<QuizParams>, res: Response, next:
             data: updatedQuizData
         })
 
-        return res.json(updatedQuiz)
+        const [likes, dislikes] = await Promise.all([
+            prisma.userQuizLike.count({
+                where: {
+                    quizId: quizId,
+                    isLiked: true
+                }
+            }),
+            prisma.userQuizLike.count({
+                where: {
+                    quizId: quizId,
+                    isLiked: false
+                }
+            })
+        ])
+
+        return res.json({
+            ...updatedQuiz,
+            likes,
+            dislikes
+        })
     }
     catch (error) {
         next(error)
