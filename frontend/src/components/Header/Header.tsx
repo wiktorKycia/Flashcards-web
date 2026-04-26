@@ -5,6 +5,7 @@ import ButtonAdd from '../ButtonAdd/ButtonAdd.tsx'
 import ProfilePicture from '../ProfilePicture/ProfilePicture.tsx'
 import useTheme from '@/hooks/useTheme.ts'
 import styles from './Header.module.scss'
+import ThemeToggler from "@/components/ThemeToggler";
 
 export default function Header() {
     const {theme, toggleTheme} = useTheme()
@@ -17,9 +18,7 @@ export default function Header() {
             </div>
             <SearchBar />
             <div>
-                <button onClick={toggleTheme}>
-                    {theme === "light" ? "Dark" : "Light"}
-                </button>
+                <ThemeToggler toggleFn={toggleTheme} isLight={theme === "light"}/>
                 <ButtonAdd />
                 <ProfilePicture />
             </div>

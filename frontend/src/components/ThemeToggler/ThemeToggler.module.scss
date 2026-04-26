@@ -1,0 +1,42 @@
+@import "index";
+
+.ThemeToggler {
+    width: 5rem;
+    height: 2.6rem;
+    border-radius: 1.3rem;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.light {
+    background-color: #e0ffe0;
+}
+
+.dark {
+    background-color: #003300;
+}
+
+.dot {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background-color: #ffffff;
+    position: absolute;
+    left: 0.2rem;
+    transition: transform 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dotLeft {
+    transform: translateX(0);
+}
+
+.dotRight {
+    transform: translateX(2.4rem); /* 50 - 24 = 26 */
+}
+
