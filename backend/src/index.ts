@@ -27,7 +27,7 @@ app.use("/saved-quizzes", savedQuizzesRouter)
 app.use("/flashcards", flashcardsRouter)
 app.use("/quizzes", quizzesRouter)
 app.use("/quizzes-progress", quizzesProgressRouter)
-app.use("/tasks/generation", tasksGenerationRouter)
+app.use("/api/tasks/generation", tasksGenerationRouter)
 
 app.get('/', (_req: Request, res: Response) => {
     res.status(200).json({content: "Hello world!"})
