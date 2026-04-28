@@ -8,7 +8,7 @@ const getData = async (quizId: number): Promise<QuizData> => {
     } else {
         const quiz: Quiz = await quizResponse.json()
         const flashcardsResponse = await fetch(
-            `/api/flashcards?quizId=${quizId}`
+            `/api/quizzes/${quizId}/flashcards`
         )
         const flashcards: Flashcard[] = await flashcardsResponse.json()
 
