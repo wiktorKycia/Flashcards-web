@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import profileLogo from '../../assets/placeholder-profile-picture-1.jpg'
+import profileLogo from '@/assets/placeholder-profile-picture-1.jpg'
 import styles from './ProfilePicture.module.scss'
 
 export default function ProfilePicture() {

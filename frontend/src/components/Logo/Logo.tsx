@@ -1,9 +1,11 @@
-import logo from '../../assets/lingoSpark-logo.svg'
+import { Link } from 'react-router'
+import logo from '@/assets/lingoSpark-logo.svg'
+import styles from './Logo.module.scss'
 
 export default function Logo() {
     return (
-        <button>
+        <Link to={'/'} className={styles.Logo}>
             <img src={logo} alt="logo" />
-        </button>
+        </Link>
     )
 }
