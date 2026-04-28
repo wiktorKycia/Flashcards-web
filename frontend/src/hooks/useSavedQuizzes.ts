@@ -13,7 +13,8 @@ const getData = async (userId: number): Promise<Quiz[]> => {
 export const useSavedQuizzes = (id: number) => {
     return useQuery({
         queryKey: ['quiz', id],
-        queryFn: () => getData(id)
+        queryFn: () => getData(id),
+        enabled: !!id
     })
 }
 

@@ -30,6 +30,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('userId', user.id as unknown as string)
         localStorage.setItem('userName', user.name)
         setToken(newToken)
+        setUser(user)
     }
 
     function logout() {

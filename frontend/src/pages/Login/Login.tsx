@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import { useLogin } from '@/hooks/useLogin.ts'
@@ -10,9 +10,13 @@ import type { NavigateFunction } from 'react-router'
 export default function Login() {
     const navigate: NavigateFunction = useNavigate()
     const { login, token } = useAuth()
-    if (token) {
-        navigate('/')
-    }
+
+    useEffect(() => {
+        if (token) {
+            navigate('/')
+        }
+    }, [token, navigate])
+
     const [form, setForm] = useState({ login: '', password: '' })
 
     const loginMutation = useLogin()

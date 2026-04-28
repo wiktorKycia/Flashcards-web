@@ -22,6 +22,11 @@ export default function UserSettings() {
     )
     console.log(data)
 
+    if (!auth.user)
+    {
+        return <LoadingSpinner/>
+    }
+
     return (
         <div className={styles.UserSettings}>
             <h1>Hello {auth.user?.name}</h1>
@@ -36,10 +41,10 @@ export default function UserSettings() {
                 {!isError &&
                     !isLoading &&
                     data &&
-                    data.map((quiz, index) => {
+                    data.map((quiz) => {
                         console.log(quiz)
                         return (
-                            <div key={index}>
+                            <div>
                                 {quiz.name} {quiz.description}
                             </div>
                         )
