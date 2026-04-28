@@ -1,6 +1,6 @@
 import ProfilePicture from '../ProfilePicture/ProfilePicture.tsx'
 import { Link } from 'react-router'
-import type DisplayedPerson from '../../types/DisplayedPerson/DisplayedPerson.ts'
+import type DisplayedPerson from '../../types/DisplayedPerson.ts'
 import styles from './Person.module.scss'
 
 export default function Person(props: DisplayedPerson) {

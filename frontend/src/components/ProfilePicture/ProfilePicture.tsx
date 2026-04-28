@@ -4,7 +4,7 @@ import styles from './ProfilePicture.module.scss'
 
 export default function ProfilePicture() {
     return (
-        <Link to={'/user/'}>
+        <Link to={'/user/'} className={styles.ProfilePicture}>
             <img
                 className={styles.ProfilePicture}
                 src={profileLogo}
