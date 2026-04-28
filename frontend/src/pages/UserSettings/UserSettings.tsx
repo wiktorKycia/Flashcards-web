@@ -41,11 +41,11 @@ export default function UserSettings() {
                 {!isError &&
                     !isLoading &&
                     data &&
-                    data.map((quiz) => {
-                        console.log(quiz)
+                    data.map((item) => {
+                        console.log(item)
                         return (
                             <div>
-                                {quiz.name} {quiz.description}
+                                {item.quiz.name} {item.quiz.description}
                             </div>
                         )
                     })}
