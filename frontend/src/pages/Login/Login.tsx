@@ -39,29 +39,27 @@ export default function Login() {
     return (
         <>
             <main className={styles.Main}>
-                <div className={styles.MainRight}>
-                    <form
-                        onSubmit={handleSubmit}
-                        className={styles.FormContainer}
-                    >
-                        <h2>Login</h2>
-                        <input
-                            type="text"
-                            placeholder="login"
-                            onChange={(e) =>
-                                setForm({ ...form, login: e.target.value })
-                            }
-                        />
-                        <input
-                            type="password"
-                            placeholder="hasło"
-                            onChange={(e) =>
-                                setForm({ ...form, password: e.target.value })
-                            }
-                        />
-                        <button type="submit">Login</button>
-                    </form>
-                </div>
+                <form
+                    onSubmit={handleSubmit}
+                    className={styles.FormContainer}
+                >
+                    <h1>Login</h1>
+                    <input
+                        type="text"
+                        placeholder="login"
+                        onChange={(e) =>
+                            setForm({ ...form, login: e.target.value })
+                        }
+                    />
+                    <input
+                        type="password"
+                        placeholder="hasło"
+                        onChange={(e) =>
+                            setForm({ ...form, password: e.target.value })
+                        }
+                    />
+                    <button type="submit">Login</button>
+                </form>
             </main>
         </>
     )
