@@ -15,7 +15,7 @@ export default function Quiz() {
     const { data, isLoading, isError, error } = useQuizData(id)
     console.log(data, isLoading, isError, error)
 
-    let isUserAuthor = false
+    let isUserAuthor = true
 
     const authInfo = useAuth()
 
@@ -71,10 +71,10 @@ export default function Quiz() {
                             <AttachedFlashcardsMode
                                 flashcards={data.flashcards.map((flashcard) => {
                                     return {
-                                        front: flashcard.side1,
-                                        back: flashcard.side2,
-                                        langFront: flashcard.language1,
-                                        langBack: flashcard.language2
+                                        front: flashcard.front,
+                                        back: flashcard.back,
+                                        langFront: flashcard.frontLanguage,
+                                        langBack: flashcard.backLanguage
                                     }
                                 })}
                             />
@@ -92,10 +92,10 @@ export default function Quiz() {
                             flashcards={data.flashcards.map((flashcard) => {
                                 return {
                                     database_id: flashcard.id,
-                                    langFront: flashcard.language1,
-                                    langBack: flashcard.language2,
-                                    front: flashcard.side1,
-                                    back: flashcard.side2,
+                                    langFront: flashcard.frontLanguage,
+                                    langBack: flashcard.backLanguage,
+                                    front: flashcard.front,
+                                    back: flashcard.back,
                                     isStarred: false
                                 }
                             })}

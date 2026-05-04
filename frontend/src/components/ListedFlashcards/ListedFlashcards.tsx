@@ -33,7 +33,7 @@ export default function ListedFlashcards(props: ListedFlashcardsProps) {
                 />
                 <button onClick={resetFilters}>Reset filters</button>
             </Container>
-            <Container cssClassName={'container-vertical-borderless'}>
+            <Container cssClassName={'container-vertical-borderless ' + styles.ListedFlashcardsFlashcardsContainer}>
                 {props.flashcards.map((flashcard) => {
                     if (isStarredOnly && flashcard.isStarred)
                         return (

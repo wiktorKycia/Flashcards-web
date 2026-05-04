@@ -8,7 +8,7 @@ const getData = async (quizId: number): Promise<QuizData> => {
     } else {
         const quiz: Quiz = await quizResponse.json()
         const flashcardsResponse = await fetch(
-            `/api/flashcards?quizId=${quizId}`
+            `/api/quizzes/${quizId}/flashcards`
         )
         const flashcards: Flashcard[] = await flashcardsResponse.json()
 
@@ -37,11 +37,12 @@ interface Quiz {
 
 interface Flashcard {
     id: number
-    language1: string
-    language2: string
-    side1: string
-    side2: string
+    frontLanguage: string
+    backLanguage: string
+    front: string
+    back: string
     quizId: number
+    starred: boolean
 }
 
 interface QuizAuthor {
