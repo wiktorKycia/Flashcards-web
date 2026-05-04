@@ -95,6 +95,12 @@ input {
     }
 }
 
+.container-borderless {
+    padding: 2rem;
+    background-color: transparent;
+    border: none
+}
+
 .container-vertical-borderless {
     display: flex;
     flex-direction: row;
@@ -102,5 +108,5 @@ input {
     align-items: center;
     padding: 2rem;
     border: none;
-    background-color: lightgreen;
+    background-color: transparent;
 }

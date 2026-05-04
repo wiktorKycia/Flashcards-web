@@ -2,7 +2,7 @@ import Person from '@/components/Person'
 import Container from '@/components/Container'
 import AttachedFlashcardsMode from '@/components/AttachedFlashcardsMode'
 import ButtonTop from '@/components/ButtonTop'
-import ToolBar from '@/components/ToolBar'
+// import ToolBar from '@/components/ToolBar'
 import styles from './Quiz.module.scss'
 import { useParams } from 'react-router'
 import ListedFlashcards from '@/components/ListedFlashcards'
@@ -27,7 +27,7 @@ export default function Quiz() {
     return (
         <>
             <main className={styles.Main}>
-                {isLoggedIn && (<ToolBar />)}
+                {/*{isLoggedIn && (<ToolBar />)}*/}
                 {isError && <div>wystąpił błąd</div>}
                 {isLoading && <LoadingSpinner />}
                 {!isLoading && !isError && data && (
@@ -37,7 +37,7 @@ export default function Quiz() {
                             <p>{data.quiz.description}</p>
                         )}
                         <Container
-                            cssClassName={'container-vertical-borderless'}
+                            cssClassName={'container-borderless ' + styles.MainOptions}
                         >
                             <button>eksport do pliku</button>
                             <button>udostępnij</button>
@@ -56,7 +56,7 @@ export default function Quiz() {
                             )}
                         </Container>
                         <Container
-                            cssClassName={'container-vertical-borderless'}
+                            cssClassName={'container-borderless ' + styles.MainLearnOptions}
                         >
                             <button>ucz się</button>
                             <button>dopasowania</button>
