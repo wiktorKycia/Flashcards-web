@@ -80,11 +80,13 @@ export default function Quiz() {
                             />
                         </Container>
                         <Container
-                            cssClassName={'container-vertical-borderless'}
+                            cssClassName={'container-borderless ' + styles.MainAuthor}
                         >
-                            <Person name={'John doe'} title={'author'} />
-                            <button>like</button>
-                            <button>dislike</button>
+                            <Person id={1} name={'John doe'} title={'author'} />
+                            <Container cssClassName={'container-positioner ' + styles.MainAuthorLikeContainer}>
+                                <button>like</button>
+                                <button>dislike</button>
+                            </Container>
                         </Container>
                         <ListedFlashcards
                             flashcards={data.flashcards.map((flashcard) => {

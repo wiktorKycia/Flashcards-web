@@ -1,12 +1,10 @@
 .Person {
-    width: 180px;
-
-    &Icon {
-        float: left;
-    }
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
     &Description {
-        float: right;
+        //float: right;
         display: flex;
         flex-direction: column;
         justify-content: center;

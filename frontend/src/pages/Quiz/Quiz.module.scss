@@ -38,4 +38,16 @@
     &LearnOptions {
         justify-content: flex-start;
     }
+
+    &Author {
+        display: flex;
+        justify-content: flex-start;
+        gap: 2rem;
+
+        &LikeContainer {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+    }
 }
