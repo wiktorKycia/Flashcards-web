@@ -18,7 +18,7 @@ export default function EditableFlashcard(props: EditableFlashcardProps) {
     const [text2, setText2] = useState<string>(props.back)
 
     return (
-        <Container>
+        <Container cssClassName={styles.EditableFlashcard}>
             {isEditing ? (
                 <input
                     type="text"
@@ -39,15 +39,15 @@ export default function EditableFlashcard(props: EditableFlashcardProps) {
                 <div>{text2}</div>
             )}
 
-            {props.isUserLoggedIn && (
-                <button onClick={() => setIsStarred((prevState) => !prevState)}>
-                    {isStarred ? '*' : '-'}
-                </button>
-            )}
-
             {props.isUserLoggedIn && props.isUserAuthor && (
                 <button onClick={() => setIsEditing((prevState) => !prevState)}>
                     {isEditing ? 'Save' : 'Edit'}
+                </button>
+            )}
+
+            {props.isUserLoggedIn && (
+                <button onClick={() => setIsStarred((prevState) => !prevState)}>
+                    {isStarred ? '*' : '-'}
                 </button>
             )}
         </Container>

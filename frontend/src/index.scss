@@ -22,8 +22,9 @@
     --color-accent3: #166534;
     --color-accent4: #003300;
 
-    --color-border: #bbf7d0;//#e0ffe0; // #bbf7d0
+    --color-border: #88d0d0;//#e0ffe0; // #bbf7d0
     --border: 1px solid var(--color-border);
+    --border-thick: 2px solid var(--color-accent3);
 
     --shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
     --shadow-big: 0 8px 16px rgba(0, 0, 0, 0.1);

@@ -5,7 +5,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #007bff;
+    background-color: var(--color-accent);
     color: white;
     border: none;
     font-size: 20px;
@@ -20,7 +20,7 @@
         transform 0.2s;
 
     &:hover {
-        background-color: #0056b3;
+        background-color: var(--color-accent2);
         transform: translateY(-2px);
     }
 

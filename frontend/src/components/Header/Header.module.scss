@@ -5,6 +5,7 @@
     flex-direction: row;
     justify-content: space-between;
     background-color: var(--color-accent);
+    box-shadow: var(--shadow-big);
 
     &Left, &Right {
         display: flex;
