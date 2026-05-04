@@ -31,11 +31,15 @@ export default function Quiz() {
                 {isError && <div>wystąpił błąd</div>}
                 {isLoading && <LoadingSpinner />}
                 {!isLoading && !isError && data && (
-                    <div className={styles.MainRight}>
-                        <h1>{data.quiz.name || 'Nazwa quizu'}</h1>
-                        {data.quiz.description && (
-                            <p>{data.quiz.description}</p>
-                        )}
+                    <div className={styles.MainWrapper}>
+                        <Container
+                            cssClassName={'container-borderless ' + styles.MainContainerTitle}
+                        >
+                            <h1>{data.quiz.name || 'Nazwa quizu'}</h1>
+                            {data.quiz.description && (
+                                <p>{data.quiz.description}</p>
+                            )}
+                        </Container>
                         <Container
                             cssClassName={'container-borderless ' + styles.MainOptions}
                         >

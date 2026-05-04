@@ -2,8 +2,20 @@
     display: flex;
     justify-content: center;
 
-    &Right {
+    &Wrapper {
         width: 60%;
+    }
+
+    &ContainerTitle
+    {
+        h1 {
+            font-size: 3.6rem;
+            color: var(--color-text-primary)
+        }
+        p {
+            font-size: 2rem;
+            color: var(--color-text-secondary)
+        }
     }
 
     &Options, &LearnOptions {
