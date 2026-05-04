@@ -99,16 +99,6 @@ export default function Quiz() {
                                     isStarred: false
                                 }
                             })}
-                            // flashcards={[
-                            //     {
-                            //         database_id: 1,
-                            //         front: 'front',
-                            //         back: 'back',
-                            //         langFront: 'english',
-                            //         langBack: 'english',
-                            //         isStarred: true
-                            //     }
-                            // ]}
                             isUserLoggedIn={isLoggedIn}
                             isUserAuthor={isUserAuthor}
                         />

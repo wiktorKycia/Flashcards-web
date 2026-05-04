@@ -108,8 +108,7 @@ input {
     background-color: transparent;
 }
 
-
-.container-vertical-borderless {
+.container-horizontal-borderless {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -118,3 +117,14 @@ input {
     border: none;
     background-color: transparent;
 }
+
+.container-vertical-borderless {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+    border: none;
+    background-color: transparent;
+}
+
