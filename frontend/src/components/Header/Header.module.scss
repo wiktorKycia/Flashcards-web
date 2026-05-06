@@ -6,6 +6,7 @@
     justify-content: space-between;
     background-color: var(--color-accent);
     box-shadow: var(--shadow-big);
+    z-index: 2;
 
     &Left, &Right {
         display: flex;
