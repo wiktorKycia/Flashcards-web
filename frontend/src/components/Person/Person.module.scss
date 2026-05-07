@@ -4,10 +4,17 @@
     align-items: center;
 
     &Description {
-        //float: right;
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding: 0.6rem;
+    }
+
+    h3 {
+        color: var(--color-text-primary);
+    }
+
+    p {
+        color: var(--color-text-secondary);
     }
 }

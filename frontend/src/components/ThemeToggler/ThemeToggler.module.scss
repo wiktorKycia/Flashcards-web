@@ -9,14 +9,12 @@
     display: flex;
     align-items: center;
     transition: all 0.3s ease;
-}
+    background-color: var(--color-accent3);
 
-.light {
-    background-color: #e0ffe0;
-}
-
-.dark {
-    background-color: #003300;
+    &:hover
+    {
+        background-color: var(--color-accent2);
+    }
 }
 
 .dot {

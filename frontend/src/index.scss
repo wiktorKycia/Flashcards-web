@@ -14,7 +14,7 @@
     --color-surface: #f0fff4;
 
     --color-text-primary: #3c4a3e;//#111111;
-    --color-text-secondary: #9fafa1;//#333333;
+    --color-text-secondary: #5c6d5f;//#333333;
     --color-text-buttons: #e3f0e3;
 
     --color-accent: #22c55e;
@@ -103,6 +103,11 @@ button {
     &:hover {
         background-color: var(--color-accent2);
     }
+}
+
+label
+{
+    color: var(--color-text-primary);
 }
 
 input {
