@@ -37,10 +37,10 @@ interface Quiz {
 
 interface Flashcard {
     id: number
-    language1: string
-    language2: string
-    side1: string
-    side2: string
+    frontLanguage: string
+    backLanguage: string
+    front: string
+    back: string
     quizId: number
 }
 

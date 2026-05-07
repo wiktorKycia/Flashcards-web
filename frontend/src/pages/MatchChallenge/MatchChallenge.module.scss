@@ -1,0 +1,16 @@
+.MatchChallenge {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.Grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.Finished {
+    font-size: 2rem;
+    font-weight: bold;
+}
