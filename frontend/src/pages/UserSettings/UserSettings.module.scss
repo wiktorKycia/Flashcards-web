@@ -1,3 +1,59 @@
 .UserSettings {
-    background: lighten(lightgreen, 40%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 2rem;
+
+    h1 {
+        color: var(--color-text-primary);
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .ButtonGroup {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        button {
+            min-width: 150px;
+        }
+    }
+}
+
+.QuizList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 2rem;
+
+    .QuizItem {
+        background-color: var(--color-surface);
+        border: var(--border);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+        color: var(--color-text-primary);
+        transition: var(--transition);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-big);
+        }
+
+        h3 {
+            color: var(--color-accent2);
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        p {
+            color: var(--color-text-secondary);
+            font-size: 1.4rem;
+        }
+    }
 }
