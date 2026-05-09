@@ -5,6 +5,7 @@ import Container from '@/components/Container'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
 import { useEffect } from 'react'
+import { Link } from 'react-router'
 
 export default function UserSettings() {
     const navigate = useNavigate()
@@ -36,10 +37,10 @@ export default function UserSettings() {
             {isLoading && <LoadingSpinner />}
             {data ? data.map((quiz) => (
                 <Container key={quiz.id}>
-                    <div className={styles.QuizItem}>
+                    <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
                         <h2>{quiz.name}</h2>
                         <p>{quiz.description}</p>
-                    </div>
+                    </Link>
                 </Container>
             )):null}
         </div>
