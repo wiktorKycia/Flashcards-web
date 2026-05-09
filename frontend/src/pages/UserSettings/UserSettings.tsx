@@ -22,11 +22,6 @@ export default function UserSettings() {
     )
     console.log(data)
 
-    if (!auth.user)
-    {
-        return <LoadingSpinner/>
-    }
-
     return (
         <div className={styles.UserSettings}>
             <h1>Hello {auth.user?.name}</h1>
@@ -39,19 +34,14 @@ export default function UserSettings() {
 
             {isError && <p style={{ color: 'var(--color-accent2)' }}>wystąpił błąd</p>}
             {isLoading && <LoadingSpinner />}
-            {!isError && !isLoading && data && (
-                <Container cssClassName={styles.QuizList}>
-                    {data.map((quiz) => {
-                        console.log(quiz)
-                        return (
-                            <div key={quiz.id} className={styles.QuizItem}>
-                                <h3>{quiz.name}</h3>
-                                <p>{quiz.description}</p>
-                            </div>
-                        )
-                    })}
+            {data ? data.map((quiz) => (
+                <Container key={quiz.id}>
+                    <div className={styles.QuizItem}>
+                        <h2>{quiz.name}</h2>
+                        <p>{quiz.description}</p>
+                    </div>
                 </Container>
-            )}
+            )):null}
         </div>
     )
 }
