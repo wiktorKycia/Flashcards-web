@@ -16,15 +16,14 @@
     border: var(--border);
     border-radius: 1rem;
     padding: 1.5rem;
-    box-shadow: var(--shadow);
     color: var(--color-text-primary);
     width: 100%;
     max-width: 600px;
     transition: var(--transition);
+    cursor: pointer;
 
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-big);
+        box-shadow: var(--shadow);
     }
 
     h2 {

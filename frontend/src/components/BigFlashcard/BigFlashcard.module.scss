@@ -12,6 +12,7 @@
     transition: var(--transition-long);
     transform-style: preserve-3d;
     cursor: pointer;
+    box-shadow: var(--shadow-big);
 
     &.flipped {
         transform: rotateY(180deg);
@@ -28,7 +29,6 @@
         justify-content: center;
         background-color: var(--color-surface);
         border-radius: 12px;
-        box-shadow: var(--shadow-big);
         font-size: 2rem;
         color: var(--color-text-primary);
     }
