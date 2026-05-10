@@ -1,3 +1,107 @@
 .QuizCreate {
 
 }
+
+.QuizEdit {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0 6rem;
+}
+
+.MainWrapper {
+    width: min(92vw, 980px);
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    padding: 3rem;
+    border: var(--border);
+    border-radius: 1.6rem;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-big);
+}
+
+.FieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.DescriptionInput {
+    min-height: 10rem;
+    padding: 1rem;
+    border: var(--border);
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-surface);
+    resize: vertical;
+
+    &:focus {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow);
+        outline: none;
+    }
+}
+
+.FlashcardsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.SectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+        font-size: 2.2rem;
+        color: var(--color-text-primary);
+    }
+}
+
+.FlashcardRow {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr auto;
+    gap: 1rem;
+    padding: 1.6rem;
+    border: var(--border);
+    border-radius: 1.2rem;
+    background-color: var(--color-bg);
+}
+
+.AddButton {
+    background-color: var(--color-accent3);
+
+    &:hover {
+        background-color: var(--color-accent4);
+    }
+}
+
+.RemoveButton {
+    background-color: #c53030;
+
+    &:hover {
+        background-color: #9b2c2c;
+    }
+}
+
+.FormActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.StatusText {
+    font-size: 1.6rem;
+    color: var(--color-text-secondary);
+}
+
+.ErrorText {
+    font-size: 1.5rem;
+    color: #c53030;
+}
+
+.SuccessText {
+    font-size: 1.5rem;
+    color: var(--color-accent3);
+}
