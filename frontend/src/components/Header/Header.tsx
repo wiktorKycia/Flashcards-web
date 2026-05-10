@@ -6,9 +6,12 @@ import ProfilePicture from '../ProfilePicture/ProfilePicture.tsx'
 import useTheme from '@/hooks/useTheme.ts'
 import styles from './Header.module.scss'
 import ThemeToggler from "@/components/ThemeToggler";
+import { useCheckIfLoggedIn } from '@/hooks/useCheckIfLoggedIn.ts'
 
 export default function Header() {
     const {theme, toggleTheme} = useTheme()
+
+    const isLoggedIn = useCheckIfLoggedIn()
 
     return (
         <header className={styles.Header}>
@@ -19,7 +22,7 @@ export default function Header() {
             <SearchBar />
             <div className={styles.HeaderRight}>
                 <ThemeToggler toggleFn={toggleTheme} isLight={theme === "light"}/>
-                <ButtonAdd />
+                {isLoggedIn && (<ButtonAdd />)}
                 <ProfilePicture />
             </div>
         </header>
