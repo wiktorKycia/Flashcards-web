@@ -2,13 +2,13 @@ import Person from '@/components/Person'
 import Container from '@/components/Container'
 import AttachedFlashcardsMode from '@/components/AttachedFlashcardsMode'
 import ButtonTop from '@/components/ButtonTop'
-// import ToolBar from '@/components/ToolBar'
 import styles from './Quiz.module.scss'
 import { useParams } from 'react-router'
 import ListedFlashcards from '@/components/ListedFlashcards'
 import { useAuth } from '@/context/AuthContext.tsx'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useQuizData } from '@/hooks/useQuizData.ts'
+import { useCheckIfLoggedIn } from '@/hooks/useCheckIfLoggedIn.ts'
 
 export default function Quiz() {
     const id: number = parseInt(useParams().id as string)
@@ -17,11 +17,10 @@ export default function Quiz() {
 
     let isUserAuthor = true
 
-    const authInfo = useAuth()
-
-    const isLoggedIn = !!authInfo.token
-    if (isLoggedIn && authInfo.user != null && data != undefined) {
-        isUserAuthor = authInfo.user.id == data.quiz.authorId
+    const auth = useAuth()
+    const isLoggedIn = useCheckIfLoggedIn()
+    if (isLoggedIn && auth.user != null && data != undefined) {
+        isUserAuthor = auth.user.id == data.quiz.authorId
     }
 
     return (
