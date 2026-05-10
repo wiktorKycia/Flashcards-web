@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext.tsx'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import { useQuizData } from '@/hooks/useQuizData.ts'
+import { useEffect } from 'react'
 
 export default function QuizEdit(){
     useLoggedInOnly()
@@ -14,13 +15,15 @@ export default function QuizEdit(){
     const id: number = parseInt(useParams().id as string)
     const { data, isLoading, isError, error } = useQuizData(id)
 
-    console.log(data, isLoading, isError, error)
+    useEffect(() => {
+        if (isLoading || isError) return
+        if (!data?.quiz) return
 
-    console.log(auth.user?.id, data?.quiz.authorId)
-    if (auth.user?.id !== data?.quiz.authorId)
-    {
-        navigate(-1) // go back by one page
-    }
+        if (auth.user?.id !== data.quiz.authorId)
+        {
+            navigate(-1) // go back by one page
+        }
+    }, [auth.user?.id, data?.quiz, isLoading, isError, navigate])
 
     return (
         <>
