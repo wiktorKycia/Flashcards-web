@@ -122,7 +122,7 @@ router.get("/:id(\\d+)/saved-quizzes", async (req: Request<UserParams>, res: Res
         })
 
         if (user) {
-            return res.json(user.SavedQuiz.map((savedQuiz) => savedQuiz.quiz))
+            return res.json(user.SavedQuiz.map((savedQuiz: {quiz:unknown}) => savedQuiz.quiz))
         }
         else {
             return res.sendStatus(404)
@@ -165,8 +165,10 @@ router.get("/:userId(\\d+)/quizzes/:quizId(\\d+)", async (req: Request<UserQuizL
         const userId = parseInt(req.params.userId)
         const quizLike = await prisma.userQuizLike.findUnique({
             where: {
-                userId: userId,
-                quizId: quizId,
+                userId_quizId: {
+                    userId: userId,
+                    quizId: quizId,
+                }
             }
         })
 

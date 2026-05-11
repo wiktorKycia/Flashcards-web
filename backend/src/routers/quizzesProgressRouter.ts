@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import express, { Router, Request, Response, NextFunction } from "express"
 
-
 const router: Router = express.Router()
 const prisma = new PrismaClient()
 
@@ -11,18 +10,13 @@ interface QuizProgressParams {
 
 interface QuizProgressCreate {
     isStarred?: boolean
-    isKnown?: boolean
     userId: number
     quizId: number
     flashcardId: number
 }
 
 interface QuizProgressUpdate {
-    isStarred: boolean
-    isKnown: boolean
-    userId: number
-    quizId: number
-    flashcardId: number
+    isStarred?: boolean
 }
 
 router.get("/:id(\\d+)", async (req: Request<QuizProgressParams>, res: Response, next: NextFunction) => {

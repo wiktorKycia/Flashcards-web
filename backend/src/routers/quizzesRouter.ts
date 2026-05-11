@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import express, { Router, Request, Response, NextFunction } from "express"
 
-
 const router: Router = express.Router()
 const prisma = new PrismaClient()
 
@@ -11,12 +10,16 @@ interface QuizParams {
 
 interface QuizCreate {
     name: string
+    frontLanguage: string
+    backLanguage: string
     description?: string
     authorId: number
 }
 
 interface QuizUpdate {
-    name: string
+    name?: string
+    frontLanguage?: string
+    backLanguage?: string
     description?: string
 }
 
