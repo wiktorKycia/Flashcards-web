@@ -144,6 +144,15 @@ export default function QuizEdit(){
         event.preventDefault()
         if (!draft) return
 
+        const name = draft.quiz.name.trim()
+        const frontLanguage = draft.quiz.frontLanguage.trim()
+        const backLanguage = draft.quiz.backLanguage.trim()
+        if (!name || !frontLanguage || !backLanguage) {
+            setSaveError('Uzupelnij nazwe quizu oraz oba jezyki')
+            setSaveMessage(null)
+            return
+        }
+
         setIsSaving(true)
         setSaveError(null)
         setSaveMessage(null)
@@ -151,10 +160,10 @@ export default function QuizEdit(){
         try {
             const description = draft.quiz.description.trim()
             const quizPayload = {
-                name: draft.quiz.name.trim(),
+                name,
                 description: description.length ? description : null,
-                frontLanguage: draft.quiz.frontLanguage.trim(),
-                backLanguage: draft.quiz.backLanguage.trim()
+                frontLanguage,
+                backLanguage
             }
 
             const quizResponse = await fetch(`/api/quizzes/${id}`, {
