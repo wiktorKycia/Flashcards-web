@@ -5,12 +5,13 @@ import { useAuth } from '@/context/AuthContext.tsx'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import { useQuizData } from '@/hooks/useQuizData.ts'
-import { useEffect, useState } from 'react'
+import { type SubmitEvent, useEffect, useState } from 'react'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useUpdateQuiz } from '@/hooks/useUpdateQuiz.ts'
 import { useCreateFlashcard } from '@/hooks/useCreateFlashcard.ts'
 import { useUpdateFlashcard } from '@/hooks/useUpdateFlashcard.ts'
 import { useDeleteFlashcard } from '@/hooks/useDeleteFlashcard.ts'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface DraftFlashcard {
     id?: number
@@ -52,6 +53,7 @@ export default function QuizEdit(){
     const createFlashcard = useCreateFlashcard()
     const updateFlashcard = useUpdateFlashcard()
     const deleteFlashcard = useDeleteFlashcard()
+    const queryClient = useQueryClient()
 
     useEffect(() => {
         if (isLoading || isError) return
@@ -148,7 +150,7 @@ export default function QuizEdit(){
         })
     }
 
-    async function handleButtonSave(event: React.FormEvent<HTMLFormElement>)
+    async function handleButtonSave(event: SubmitEvent<HTMLFormElement>)
     {
         event.preventDefault()
         if (!draft) return
@@ -205,6 +207,10 @@ export default function QuizEdit(){
             )
 
             await Promise.all([...flashcardRequests, ...deleteRequests])
+
+            await queryClient.invalidateQueries({
+                queryKey: ['quiz', 'flashcards', 'quizAuthor', id]
+            })
 
             setSaveMessage('Zapisano zmiany')
         } catch {
