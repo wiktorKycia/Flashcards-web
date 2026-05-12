@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext.tsx'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import { useQuizData } from '@/hooks/useQuizData.ts'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import LoadingSpinner from '@/components/LoadingSpinner'
 
 interface DraftFlashcard {
@@ -13,8 +13,6 @@ interface DraftFlashcard {
     clientId: string
     front: string
     back: string
-    frontLanguage: string
-    backLanguage: string
     starred: boolean
 }
 
@@ -22,6 +20,8 @@ interface QuizDraft {
     quiz: {
         name: string
         description: string
+        frontLanguage: string
+        backLanguage: string
     }
     flashcards: DraftFlashcard[]
     removedFlashcardIds: number[]
@@ -31,16 +31,6 @@ function createClientId() {
     return `${Date.now()}-${Math.random().toString(16).slice(2)}`
 }
 
-function isValidDraft(value: unknown): value is QuizDraft {
-    if (!value || typeof value !== 'object') return false
-    const draft = value as QuizDraft
-    return (
-        typeof draft.quiz?.name === 'string' &&
-        typeof draft.quiz?.description === 'string' &&
-        Array.isArray(draft.flashcards)
-    )
-}
-
 export default function QuizEdit(){
     useLoggedInOnly()
     const auth = useAuth()
@@ -48,8 +38,6 @@ export default function QuizEdit(){
 
     const id: number = parseInt(useParams().id as string)
     const { data, isLoading, isError } = useQuizData(id)
-
-    const storageKey = useMemo(() => `quizEditDraft:${id}`, [id])
 
     const [draft, setDraft] = useState<QuizDraft | null>(null)
     const [isSaving, setIsSaving] = useState(false)
@@ -68,48 +56,25 @@ export default function QuizEdit(){
 
         if (draft) return
 
-        const storedDraft = localStorage.getItem(storageKey)
-        if (storedDraft) {
-            try {
-                const parsed = JSON.parse(storedDraft) as QuizDraft
-                if (isValidDraft(parsed)) {
-                    setDraft({
-                        ...parsed,
-                        removedFlashcardIds: Array.isArray(parsed.removedFlashcardIds)
-                            ? parsed.removedFlashcardIds
-                            : []
-                    })
-                    return
-                }
-            } catch {
-                localStorage.removeItem(storageKey)
-            }
-        }
-
         setDraft({
             quiz: {
                 name: data.quiz.name ?? '',
-                description: data.quiz.description ?? ''
+                description: data.quiz.description ?? '',
+                frontLanguage: data.quiz.frontLanguage ?? '',
+                backLanguage: data.quiz.backLanguage ?? ''
             },
             flashcards: data.flashcards.map((flashcard) => ({
                 id: flashcard.id,
                 clientId: createClientId(),
                 front: flashcard.front,
                 back: flashcard.back,
-                frontLanguage: flashcard.frontLanguage,
-                backLanguage: flashcard.backLanguage,
                 starred: flashcard.starred
             })),
             removedFlashcardIds: []
         })
-    }, [auth.user?.id, data?.quiz, data?.flashcards, isLoading, isError, navigate, storageKey, draft])
+    }, [auth.user?.id, data?.quiz, data?.flashcards, isLoading, isError, navigate, draft])
 
-    useEffect(() => {
-        if (!draft) return
-        localStorage.setItem(storageKey, JSON.stringify(draft))
-    }, [draft, storageKey])
-
-    function handleQuizFieldChange(field: 'name' | 'description', value: string) {
+    function handleQuizFieldChange(field: 'name' | 'description' | 'frontLanguage' | 'backLanguage', value: string) {
         setDraft((prev) => {
             if (!prev) return prev
             return {
@@ -159,7 +124,6 @@ export default function QuizEdit(){
     function handleFlashcardAdd() {
         setDraft((prev) => {
             if (!prev) return prev
-            const first = prev.flashcards[0]
             return {
                 ...prev,
                 flashcards: [
@@ -168,8 +132,6 @@ export default function QuizEdit(){
                         clientId: createClientId(),
                         front: '',
                         back: '',
-                        frontLanguage: first?.frontLanguage ?? 'en',
-                        backLanguage: first?.backLanguage ?? 'pl',
                         starred: false
                     }
                 ]
@@ -190,7 +152,9 @@ export default function QuizEdit(){
             const description = draft.quiz.description.trim()
             const quizPayload = {
                 name: draft.quiz.name.trim(),
-                description: description.length ? description : null
+                description: description.length ? description : null,
+                frontLanguage: draft.quiz.frontLanguage.trim(),
+                backLanguage: draft.quiz.backLanguage.trim()
             }
 
             const quizResponse = await fetch(`/api/quizzes/${id}`, {
@@ -211,8 +175,6 @@ export default function QuizEdit(){
                         method: 'PATCH',
                         body: JSON.stringify({
                             starred: flashcard.starred,
-                            frontLanguage: flashcard.frontLanguage,
-                            backLanguage: flashcard.backLanguage,
                             front: flashcard.front,
                             back: flashcard.back
                         }),
@@ -226,8 +188,6 @@ export default function QuizEdit(){
                     method: 'POST',
                     body: JSON.stringify({
                         starred: flashcard.starred,
-                        frontLanguage: flashcard.frontLanguage,
-                        backLanguage: flashcard.backLanguage,
                         front: flashcard.front,
                         back: flashcard.back,
                         quizId: id
@@ -253,7 +213,6 @@ export default function QuizEdit(){
                 throw new Error(`HTTP ${failedFlashcard.status}`)
             }
 
-            localStorage.removeItem(storageKey)
             setSaveMessage('Zapisano zmiany')
         } catch {
             setSaveError('Nie udalo sie zapisac zmian')
@@ -294,6 +253,32 @@ export default function QuizEdit(){
                             />
                         </div>
 
+                        <div className={styles.FieldGroup}>
+                            <label htmlFor="quiz_front_language">Język przodu:</label>
+                            <input
+                                id="quiz_front_language"
+                                type="text"
+                                placeholder="en"
+                                value={draft.quiz.frontLanguage}
+                                onChange={(event) =>
+                                    handleQuizFieldChange('frontLanguage', event.target.value)
+                                }
+                            />
+                        </div>
+
+                        <div className={styles.FieldGroup}>
+                            <label htmlFor="quiz_back_language">Język tyłu:</label>
+                            <input
+                                id="quiz_back_language"
+                                type="text"
+                                placeholder="pl"
+                                value={draft.quiz.backLanguage}
+                                onChange={(event) =>
+                                    handleQuizFieldChange('backLanguage', event.target.value)
+                                }
+                            />
+                        </div>
+
                         <section className={styles.FlashcardsSection}>
                             <div className={styles.SectionHeader}>
                                 <h2>Fiszki</h2>
@@ -331,30 +316,6 @@ export default function QuizEdit(){
                                             handleFlashcardChange(
                                                 flashcard.clientId,
                                                 'back',
-                                                event.target.value
-                                            )
-                                        }
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Język przodu"
-                                        value={flashcard.frontLanguage}
-                                        onChange={(event) =>
-                                            handleFlashcardChange(
-                                                flashcard.clientId,
-                                                'frontLanguage',
-                                                event.target.value
-                                            )
-                                        }
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Język tyłu"
-                                        value={flashcard.backLanguage}
-                                        onChange={(event) =>
-                                            handleFlashcardChange(
-                                                flashcard.clientId,
-                                                'backLanguage',
                                                 event.target.value
                                             )
                                         }

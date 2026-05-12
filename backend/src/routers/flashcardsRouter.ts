@@ -12,8 +12,6 @@ interface FlashcardCreate {
     starred?: boolean
     front: string
     back: string
-    frontLanguage?: string
-    backLanguage?: string
     quizId: number
 }
 
@@ -21,8 +19,6 @@ interface FlashcardUpdate {
     starred?: boolean
     front?: string
     back?: string
-    frontLanguage?: string
-    backLanguage?: string
 }
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {

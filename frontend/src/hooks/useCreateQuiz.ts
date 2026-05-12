@@ -18,7 +18,7 @@ export default function useCreateQuiz()
     {
         const response = await fetch('/api/quizzes/', {
             method: 'POST',
-            body: JSON.stringify({ name: "", authorId: authorId }),
+            body: JSON.stringify({ name: "", authorId: authorId, frontLanguage: "", backLanguage: "" }),
             headers: {
                 'Content-Type': 'application/json'
             }

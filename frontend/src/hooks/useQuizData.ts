@@ -33,12 +33,12 @@ interface Quiz {
     name: string
     description: string
     authorId: number
+    frontLanguage: string
+    backLanguage: string
 }
 
 interface Flashcard {
     id: number
-    frontLanguage: string
-    backLanguage: string
     front: string
     back: string
     quizId: number

@@ -72,8 +72,8 @@ export default function Quiz() {
                                     return {
                                         front: flashcard.front,
                                         back: flashcard.back,
-                                        langFront: flashcard.frontLanguage,
-                                        langBack: flashcard.backLanguage
+                                        langFront: data.quiz.frontLanguage,
+                                        langBack: data.quiz.backLanguage
                                     }
                                 })}
                             />
@@ -91,8 +91,8 @@ export default function Quiz() {
                             flashcards={data.flashcards.map((flashcard) => {
                                 return {
                                     database_id: flashcard.id,
-                                    langFront: flashcard.frontLanguage,
-                                    langBack: flashcard.backLanguage,
+                                    langFront: data.quiz.frontLanguage,
+                                    langBack: data.quiz.backLanguage,
                                     front: flashcard.front,
                                     back: flashcard.back,
                                     isStarred: false
