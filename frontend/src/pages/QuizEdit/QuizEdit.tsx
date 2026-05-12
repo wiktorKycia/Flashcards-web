@@ -7,6 +7,10 @@ import { useParams } from 'react-router'
 import { useQuizData } from '@/hooks/useQuizData.ts'
 import { useEffect, useState } from 'react'
 import LoadingSpinner from '@/components/LoadingSpinner'
+import { useUpdateQuiz } from '@/hooks/useUpdateQuiz.ts'
+import { useCreateFlashcard } from '@/hooks/useCreateFlashcard.ts'
+import { useUpdateFlashcard } from '@/hooks/useUpdateFlashcard.ts'
+import { useDeleteFlashcard } from '@/hooks/useDeleteFlashcard.ts'
 
 interface DraftFlashcard {
     id?: number
@@ -43,6 +47,11 @@ export default function QuizEdit(){
     const [isSaving, setIsSaving] = useState(false)
     const [saveError, setSaveError] = useState<string | null>(null)
     const [saveMessage, setSaveMessage] = useState<string | null>(null)
+
+    const updateQuiz = useUpdateQuiz()
+    const createFlashcard = useCreateFlashcard()
+    const updateFlashcard = useUpdateFlashcard()
+    const deleteFlashcard = useDeleteFlashcard()
 
     useEffect(() => {
         if (isLoading || isError) return
@@ -166,61 +175,36 @@ export default function QuizEdit(){
                 backLanguage
             }
 
-            const quizResponse = await fetch(`/api/quizzes/${id}`, {
-                method: 'PATCH',
-                body: JSON.stringify(quizPayload),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            await updateQuiz.mutateAsync({
+                id,
+                ...quizPayload
             })
-
-            if (!quizResponse.ok) {
-                throw new Error(`HTTP ${quizResponse.status}`)
-            }
 
             const flashcardRequests = draft.flashcards.map((flashcard) => {
                 if (flashcard.id) {
-                    return fetch(`/api/flashcards/${flashcard.id}`, {
-                        method: 'PATCH',
-                        body: JSON.stringify({
-                            starred: flashcard.starred,
-                            front: flashcard.front,
-                            back: flashcard.back
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
+                    return updateFlashcard.mutateAsync({
+                        id: flashcard.id,
+                        starred: flashcard.starred,
+                        front: flashcard.front,
+                        back: flashcard.back
                     })
                 }
 
-                return fetch('/api/flashcards/', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        starred: flashcard.starred,
-                        front: flashcard.front,
-                        back: flashcard.back,
-                        quizId: id
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                return createFlashcard.mutateAsync({
+                    starred: flashcard.starred,
+                    front: flashcard.front,
+                    back: flashcard.back,
+                    quizId: id
                 })
             })
 
             const deleteRequests = draft.removedFlashcardIds.map((flashcardId) =>
-                fetch(`/api/flashcards/${flashcardId}`, {
-                    method: 'DELETE'
+                deleteFlashcard.mutateAsync({
+                    id: flashcardId
                 })
             )
 
-            const flashcardResponses = await Promise.all([
-                ...flashcardRequests,
-                ...deleteRequests
-            ])
-            const failedFlashcard = flashcardResponses.find((res) => !res.ok)
-            if (failedFlashcard) {
-                throw new Error(`HTTP ${failedFlashcard.status}`)
-            }
+            await Promise.all([...flashcardRequests, ...deleteRequests])
 
             setSaveMessage('Zapisano zmiany')
         } catch {
