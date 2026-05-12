@@ -8,10 +8,7 @@ import { useQuizData } from '@/hooks/useQuizData.ts'
 import { type SubmitEvent, useEffect, useState } from 'react'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useUpdateQuiz } from '@/hooks/useUpdateQuiz.ts'
-import { useCreateFlashcard } from '@/hooks/useCreateFlashcard.ts'
-import { useUpdateFlashcard } from '@/hooks/useUpdateFlashcard.ts'
-import { useDeleteFlashcard } from '@/hooks/useDeleteFlashcard.ts'
-import { useQueryClient } from '@tanstack/react-query'
+import { useReplaceQuizFlashcards } from '@/hooks/useReplaceQuizFlashcards.ts'
 
 interface DraftFlashcard {
     id?: number
@@ -29,7 +26,6 @@ interface QuizDraft {
         backLanguage: string
     }
     flashcards: DraftFlashcard[]
-    removedFlashcardIds: number[]
 }
 
 function createClientId() {
@@ -50,10 +46,7 @@ export default function QuizEdit(){
     const [saveMessage, setSaveMessage] = useState<string | null>(null)
 
     const updateQuiz = useUpdateQuiz()
-    const createFlashcard = useCreateFlashcard()
-    const updateFlashcard = useUpdateFlashcard()
-    const deleteFlashcard = useDeleteFlashcard()
-    const queryClient = useQueryClient()
+    const replaceQuizFlashcards = useReplaceQuizFlashcards()
 
     useEffect(() => {
         if (isLoading || isError) return
@@ -81,7 +74,6 @@ export default function QuizEdit(){
                 back: flashcard.back,
                 starred: flashcard.starred
             })),
-            removedFlashcardIds: []
         })
     }, [auth.user?.id, data?.quiz, data?.flashcards, isLoading, isError, navigate, draft])
 
@@ -115,19 +107,11 @@ export default function QuizEdit(){
     function handleFlashcardRemove(clientId: string) {
         setDraft((prev) => {
             if (!prev) return prev
-            const removed = prev.flashcards.find(
-                (flashcard) => flashcard.clientId === clientId
-            )
-            const removedFlashcardIds = removed?.id
-                ? Array.from(new Set([...prev.removedFlashcardIds, removed.id]))
-                : prev.removedFlashcardIds
-
             return {
                 ...prev,
                 flashcards: prev.flashcards.filter(
                     (flashcard) => flashcard.clientId !== clientId
-                ),
-                removedFlashcardIds
+                )
             }
         })
     }
@@ -182,34 +166,13 @@ export default function QuizEdit(){
                 ...quizPayload
             })
 
-            const flashcardRequests = draft.flashcards.map((flashcard) => {
-                if (flashcard.id) {
-                    return updateFlashcard.mutateAsync({
-                        id: flashcard.id,
-                        starred: flashcard.starred,
-                        front: flashcard.front,
-                        back: flashcard.back
-                    })
-                }
-
-                return createFlashcard.mutateAsync({
-                    starred: flashcard.starred,
+            await replaceQuizFlashcards.mutateAsync({
+                quizId: id,
+                flashcards: draft.flashcards.map((flashcard) => ({
                     front: flashcard.front,
                     back: flashcard.back,
-                    quizId: id
-                })
-            })
-
-            const deleteRequests = draft.removedFlashcardIds.map((flashcardId) =>
-                deleteFlashcard.mutateAsync({
-                    id: flashcardId
-                })
-            )
-
-            await Promise.all([...flashcardRequests, ...deleteRequests])
-
-            await queryClient.invalidateQueries({
-                queryKey: ['quiz', 'flashcards', 'quizAuthor', id]
+                    starred: flashcard.starred
+                }))
             })
 
             setSaveMessage('Zapisano zmiany')
