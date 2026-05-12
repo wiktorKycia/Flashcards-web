@@ -34,7 +34,7 @@ export default function Quiz() {
                         <Container
                             cssClassName={'container-borderless ' + styles.MainTitleContainer}
                         >
-                            <h1>{data.quiz.name || 'Nazwa quizu'}</h1>
+                            <h1>{data.quiz.name || 'Quiz bez nazwy'}</h1>
                             {data.quiz.description && (
                                 <p>{data.quiz.description}</p>
                             )}

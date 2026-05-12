@@ -223,10 +223,15 @@ export default function QuizEdit(){
     return (
         <>
             <main className={styles.QuizEdit}>
-                {isError && <div className={styles.StatusText}>wystąpił błąd</div>}
+                {isError && (
+                    <div className={styles.StatusText}>wystąpił błąd</div>
+                )}
                 {isLoading && <LoadingSpinner />}
                 {!isError && !isLoading && draft && (
-                    <form className={styles.MainWrapper} onSubmit={handleButtonSave}>
+                    <form
+                        className={styles.MainWrapper}
+                        onSubmit={handleButtonSave}
+                    >
                         <div className={styles.FieldGroup}>
                             <label htmlFor="quiz_name">Nazwa quizu:</label>
                             <input
@@ -235,7 +240,10 @@ export default function QuizEdit(){
                                 placeholder="Angielski, dział 2, lekcja 1"
                                 value={draft.quiz.name}
                                 onChange={(event) =>
-                                    handleQuizFieldChange('name', event.target.value)
+                                    handleQuizFieldChange(
+                                        'name',
+                                        event.target.value
+                                    )
                                 }
                             />
                         </div>
@@ -246,36 +254,51 @@ export default function QuizEdit(){
                                 id="quiz_description"
                                 value={draft.quiz.description}
                                 onChange={(event) =>
-                                    handleQuizFieldChange('description', event.target.value)
+                                    handleQuizFieldChange(
+                                        'description',
+                                        event.target.value
+                                    )
                                 }
                                 className={styles.DescriptionInput}
                             />
                         </div>
 
-                        <div className={styles.FieldGroup}>
-                            <label htmlFor="quiz_front_language">Język przodu:</label>
-                            <input
-                                id="quiz_front_language"
-                                type="text"
-                                placeholder="en"
-                                value={draft.quiz.frontLanguage}
-                                onChange={(event) =>
-                                    handleQuizFieldChange('frontLanguage', event.target.value)
-                                }
-                            />
-                        </div>
+                        <div className={'container-horizontal-borderless'}>
+                            <div className={styles.FieldGroup}>
+                                <label htmlFor="quiz_front_language">
+                                    Język przodu:
+                                </label>
+                                <input
+                                    id="quiz_front_language"
+                                    type="text"
+                                    placeholder="en"
+                                    value={draft.quiz.frontLanguage}
+                                    onChange={(event) =>
+                                        handleQuizFieldChange(
+                                            'frontLanguage',
+                                            event.target.value
+                                        )
+                                    }
+                                />
+                            </div>
 
-                        <div className={styles.FieldGroup}>
-                            <label htmlFor="quiz_back_language">Język tyłu:</label>
-                            <input
-                                id="quiz_back_language"
-                                type="text"
-                                placeholder="pl"
-                                value={draft.quiz.backLanguage}
-                                onChange={(event) =>
-                                    handleQuizFieldChange('backLanguage', event.target.value)
-                                }
-                            />
+                            <div className={styles.FieldGroup}>
+                                <label htmlFor="quiz_back_language">
+                                    Język tyłu:
+                                </label>
+                                <input
+                                    id="quiz_back_language"
+                                    type="text"
+                                    placeholder="pl"
+                                    value={draft.quiz.backLanguage}
+                                    onChange={(event) =>
+                                        handleQuizFieldChange(
+                                            'backLanguage',
+                                            event.target.value
+                                        )
+                                    }
+                                />
+                            </div>
                         </div>
 
                         <section className={styles.FlashcardsSection}>
@@ -297,7 +320,7 @@ export default function QuizEdit(){
                                 >
                                     <input
                                         type="text"
-                                        placeholder="Przód"
+                                        placeholder={`Przód (${draft.quiz.frontLanguage})`}
                                         value={flashcard.front}
                                         onChange={(event) =>
                                             handleFlashcardChange(
@@ -309,7 +332,7 @@ export default function QuizEdit(){
                                     />
                                     <input
                                         type="text"
-                                        placeholder="Tył"
+                                        placeholder={`Tył (${draft.quiz.backLanguage})`}
                                         value={flashcard.back}
                                         onChange={(event) =>
                                             handleFlashcardChange(
@@ -321,7 +344,11 @@ export default function QuizEdit(){
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => handleFlashcardRemove(flashcard.clientId)}
+                                        onClick={() =>
+                                            handleFlashcardRemove(
+                                                flashcard.clientId
+                                            )
+                                        }
                                         className={styles.RemoveButton}
                                     >
                                         Usuń
@@ -330,8 +357,14 @@ export default function QuizEdit(){
                             ))}
                         </section>
 
-                        {saveError && <div className={styles.ErrorText}>{saveError}</div>}
-                        {saveMessage && <div className={styles.SuccessText}>{saveMessage}</div>}
+                        {saveError && (
+                            <div className={styles.ErrorText}>{saveError}</div>
+                        )}
+                        {saveMessage && (
+                            <div className={styles.SuccessText}>
+                                {saveMessage}
+                            </div>
+                        )}
 
                         <div className={styles.FormActions}>
                             <button type="submit" disabled={isSaving}>
@@ -341,7 +374,7 @@ export default function QuizEdit(){
                     </form>
                 )}
             </main>
-            <ButtonTop/>
+            <ButtonTop />
         </>
     )
 }
