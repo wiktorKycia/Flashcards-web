@@ -34,48 +34,55 @@ export default function MatchChallenge(){
             }
         ])
 
-        if (mapped != undefined) {
-            return shuffle(mapped)
-        }
+        return mapped ? shuffle(mapped) : []
     }, [data?.flashcards])
 
-    const [cards, setCards] = useState<CardItem[]>(initialCards)
+    const [cards, setCards] = useState<CardItem[]>([])
+    const [selectedCards, setSelectedCards] = useState<CardItem[]>([])
 
-    const selectedCards = cards.filter(
-        (card) => card.status === 'selected'
-    )
+    useEffect(() => {
+        setCards(initialCards)
+    }, [initialCards])
 
     const handleCardClick = (id: string) => {
         if (selectedCards.length >= 2) return
+
+        const clickedCard = cards.find((card) => card.id === id)
+
+        if (!clickedCard || clickedCard.status !== 'idle') return
+
+        const updatedSelected = [...selectedCards, clickedCard]
+
+        setSelectedCards(updatedSelected)
 
         setCards((prev) =>
             prev.map((card) =>
                 card.id === id ? { ...card, status: 'selected'} : card
             )
         )
-    }
 
-    useEffect(() => {
-        if (selectedCards.length !== 2) return
+        if (updatedSelected.length !== 2) return
 
-        const [first, second] = selectedCards
+        const [first, second] = updatedSelected
 
-        if (first.pairId === second.pairId && first.id != second.id){
+        if (first.pairId === second.pairId && first.id !== second.id) {
             setCards((prev) =>
                 prev.map((card) =>
-                    card.id === first.id || card.id === second.id ? { ...card, status: 'correct'} : card
+                    card.id === first.id || card.id === second.id ? { ...card, status: 'correct' } : card
                 )
             )
 
-            const hideTimeout = setTimeout(() => {
+            setTimeout(() => {
                 setCards((prev) =>
                     prev.map((card) =>
-                        card.id === first.id || card.id === second.id ? { ...card, status: 'hidden'} : card
+                        card.id === first.id || card.id === second.id ? { ...card, status: 'hidden' } : card
                     )
                 )
+
+                setSelectedCards([])
             }, 500)
 
-            return () => clearTimeout(hideTimeout)
+            return
         }
 
         setCards((prev) =>
@@ -84,18 +91,18 @@ export default function MatchChallenge(){
             )
         )
 
-        const resetTimeout = setTimeout(() => {
+        setTimeout(() => {
             setCards((prev) =>
                 prev.map((card) =>
                     card.status === "wrong" ? { ...card, status: 'idle'} : card
                 )
             )
+
+            setSelectedCards([])
         }, 700)
+    }
 
-        return () => clearTimeout(resetTimeout)
-    }, [selectedCards])
-
-    const isFinished = cards.every((card) => card.status === 'hidden')
+    const isFinished = cards.length > 0 && cards.every((card) => card.status === 'hidden')
 
     return (
         <>
