@@ -9,6 +9,7 @@ import { type SubmitEvent, useEffect, useState } from 'react'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useUpdateQuiz } from '@/hooks/useUpdateQuiz.ts'
 import { useReplaceQuizFlashcards } from '@/hooks/useReplaceQuizFlashcards.ts'
+import { useDeleteQuiz } from '@/hooks/useDeleteQuiz.ts'
 
 interface DraftFlashcard {
     id?: number
@@ -44,9 +45,9 @@ export default function QuizEdit(){
     const [isSaving, setIsSaving] = useState(false)
     const [saveError, setSaveError] = useState<string | null>(null)
     const [saveMessage, setSaveMessage] = useState<string | null>(null)
-
     const updateQuiz = useUpdateQuiz()
     const replaceQuizFlashcards = useReplaceQuizFlashcards()
+    const { isDeleting, deleteError, handleDeleteQuiz } = useDeleteQuiz()
 
     useEffect(() => {
         if (isLoading || isError) return
@@ -181,6 +182,13 @@ export default function QuizEdit(){
         } finally {
             setIsSaving(false)
         }
+    }
+
+    async function handleDeleteQuizClick() {
+        await handleDeleteQuiz({
+            id,
+            onSuccess: () => navigate('/')
+        })
     }
 
     return (
@@ -333,7 +341,19 @@ export default function QuizEdit(){
                             <button type="submit" disabled={isSaving}>
                                 {isSaving ? 'Zapisywanie...' : 'Zapisz'}
                             </button>
+                            <button 
+                                type="button"
+                                onClick={handleDeleteQuizClick}
+                                disabled={isDeleting}
+                                className={styles.DeleteButton}
+                            >
+                                {isDeleting ? 'Usuwanie...' : 'Usuń quiz'}
+                            </button>
                         </div>
+
+                        {deleteError && (
+                            <div className={styles.ErrorText}>{deleteError}</div>
+                        )}
                     </form>
                 )}
             </main>
