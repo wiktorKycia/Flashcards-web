@@ -145,21 +145,21 @@ app.use(async (err: unknown, _req: Request, res: Response, _next: NextFunction) 
         return res.sendStatus(400)
     }
 
-    if (err.message === "Missing GITHUB_TOKEN in .env.app file") {
+    if (errorMessage === "Missing GITHUB_TOKEN in .env.app file") {
         return res.status(500).json({
             error: "Nie skonfigurowano tokena GitHub wymaganego do korzystania z modeli AI"
         })
     }
-    else if (err.message === "All models failed or returned empty responses") {
+    else if (errorMessage === "All models failed or returned empty responses") {
         return res.status(503).json({
             error: "Wszystkie modele AI są chwilowo niedostępne lub osiągnęły limity. Spróbuj ponownie za około minutę"
         })
     }
-    else if (err.message === "Flashcards not found") {
+    else if (errorMessage === "Flashcards not found") {
         return res.sendStatus(404)
     }
 
-    else if (err.message === "Not enough flashcards found") {
+    else if (errorMessage === "Not enough flashcards found") {
         return res.sendStatus(422)
     }
 
