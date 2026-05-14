@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 
 type GenerateTasksProps = {
-    fillGapCounnt: number
+    fillGapCount: number
     firstLetterCount: number
     singleChoiceCount: number
     quizId: number
@@ -11,7 +11,7 @@ type GenerateTasksProps = {
 export const useGenerateTasks = () => {
     return useMutation({
         mutationFn: async ({
-           fillGapCounnt,
+           fillGapCount,
            firstLetterCount,
            singleChoiceCount,
            quizId,
@@ -30,7 +30,7 @@ export const useGenerateTasks = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        questionsAmount: fillGapCounnt,
+                        questionsAmount: fillGapCount,
                         quizId,
                         languageSide,
                     }),
