@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useParams } from 'react-router'
 import type KnowledgeTestSettings from '@/types/KnowledgeTestSettings'
 import KnowledgeTestSetup from '@/components/KnowledgeTestSetup'
 import KnowledgeTestView from '@/components/KnowledgeTestView'
@@ -7,6 +8,12 @@ import { useGenerateTasks } from '@/hooks/useGenerateTasks.ts'
 export default function KnowledgeTest() {
     const [settings, setSettings] = useState<KnowledgeTestSettings | null>(null)
     const { mutate, data, isPending, isError } = useGenerateTasks()
+    const params = useParams()
+    const quizId = params.id
+
+    if (Number.isNaN(quizId)) {
+        throw new Error("Invalid quiz id")
+    }
 
     const handleStart = (s: KnowledgeTestSettings) => {
         setSettings(s)
@@ -15,8 +22,8 @@ export default function KnowledgeTest() {
             fillGapCount: s.fillGapCount,
             firstLetterCount: s.firstLetterCount,
             singleChoiceCount: s.singleChoiceCount,
-            quizId: 1,
-            languageSide: "FRONT"
+            quizId: Number(quizId),
+            languageSide: s.flashcardsSide
         })
     }
 
