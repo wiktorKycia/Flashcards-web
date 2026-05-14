@@ -1,31 +1,45 @@
 import GapTask from '@/components/GapTask'
 import SingleChoiceTask from '@/components/SingleChoiceTask'
 
+type GapTask = {
+    sentence: string
+    phrase: string
+}
+
+type SingleChoiceTask = {
+    sentence: string
+    phrase1: string
+    phrase2: string
+    phrase3: string
+    correctAnswer: string
+}
+
 type Props = {
     data: {
         fillGap?: {
-            data: never[]
+            data: GapTask[]
         }
         firstLetterGap?: {
-            data: never[]
+            data: GapTask[]
         }
         singleChoice?: {
-            data: never[]
+            data: SingleChoiceTask[]
         }
     }
 }
 
 export default function KnowledgeTestView({ data }: Props) {
     return (
-        <div>
-            {data.fillGap?.data?.length ? (
+        <form>
+            {data.fillGap?.data?.length? (
                 <section>
                     <h2>Wypełnij luki</h2>
 
                     {data.fillGap.data.map((task, i) => (
                         <GapTask
-                            key={i}
+                            key={`fill-gap${i}`}
                             task={task}
+                            taskId={`fill-gap${i}`}
                         />
                     ))}
                 </section>
@@ -37,8 +51,9 @@ export default function KnowledgeTestView({ data }: Props) {
 
                     {data.firstLetterGap.data.map((task, i) => (
                         <GapTask
-                            key={i}
+                            key={`first-letter${i}`}
                             task={task}
+                            taskId={`first-letter${i}`}
                         />
                     ))}
                 </section>
@@ -50,12 +65,13 @@ export default function KnowledgeTestView({ data }: Props) {
 
                     {data.singleChoice.data.map((task, i) => (
                         <SingleChoiceTask
-                            key={i}
+                            key={`single-choice${i}`}
                             task={task}
+                            taskId={`single-choice${i}`}
                         />
                     ))}
                 </section>
             ) : null}
-        </div>
+        </form>
     )
 }
