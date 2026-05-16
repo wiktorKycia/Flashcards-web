@@ -23,6 +23,19 @@ interface UserCreate {
     path_to_img?: string
 }
 
+interface SavedQuizData {
+    quiz: {
+        id: number
+        name: string
+        description: string | null
+        authorId: number
+    }
+    id: number
+    userId: number
+    quizId: number
+    folderId: number | null
+}
+
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.query.userId ? parseInt(req.query.userId as string): undefined
