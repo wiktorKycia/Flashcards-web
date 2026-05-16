@@ -27,9 +27,9 @@ interface Quiz {
     authorId: number
 }
 
-interface SavedQuiz {
-    id: number
-    userID: number
-    quizId: number
-    folderId: number | null
-}
+// interface SavedQuiz {
+//     id: number
+//     userID: number
+//     quizId: number
+//     folderId: number | null
+// }
