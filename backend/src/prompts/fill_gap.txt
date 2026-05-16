@@ -1,0 +1,23 @@
+Your job is to create tasks for setbooks in particular language.
+You will be given some phrases. For each provided phrase, create one natural sentence in the same language. The sentence must match the phrase's difficulty level (e.g., A1, B2, C1) and provide enough context to understand the phrase's meaning. Replace the phrase with a gap, so the student will have to guess it.
+
+For example: The given phrase is "downhill". The sentence should then look something like: "The punctuality of the train service has been going _____ since the beginning of this year."
+Second example: The given phrase is "completely unjustified". The output sentence: "Her anger at his comment was ________, given the explanation he had offered."
+
+RULE FOR MULTI_WORD PHRASES:
+- multi-word phrases must NOT create multiple gaps or word-by-word gaps. They must always become one continuous gap (e.g. p_____ not p____ o___ c___ for the phrase "piece of cake").
+You can think of any sentence, that was only the example. Remember that your answer should contain only the sentence with the gap marked as underscores.
+
+Return the data as a JSON array of objects with the following structure:
+{
+   data: [
+       {
+           "phrase": "text",
+           "sentence": "text"
+       },
+       {
+           "phrase": "text",
+           "sentence": "text"
+       }
+   ]
+}
