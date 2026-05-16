@@ -7,7 +7,7 @@ import Register from '@/pages/Register/Register.tsx'
 import Login from '@/pages/Login/Login.tsx'
 import UserSettings from '@/pages/UserSettings'
 import Header from "@/components/Header";
-import QuizCreate from '@/pages/QuizCreate'
+import QuizEdit from '@/pages/QuizEdit'
 
 function App() {
     return (
@@ -17,9 +17,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/user/" element={<UserSettings />} />
                 <Route path="/user/:id" element={<UserProfile />} />
-                <Route path="/quiz/">
-                    <Route path="create" element={<QuizCreate/>}/>
+                <Route path="/quiz">
                     <Route path=":id" element={<Quiz />} />
+                    <Route path=":id/edit" element={<QuizEdit />} />
                 </Route>
                 <Route path="/register/" element={<Register />} />
                 <Route path="/login/" element={<Login />} />

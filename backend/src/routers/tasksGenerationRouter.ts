@@ -1,7 +1,7 @@
 import OpenAI from 'openai'
 import dotenv from 'dotenv'
 import { PrismaClient } from '@prisma/client'
-import express, { NextFunction, Request, Response, Router } from 'express'
+import express, { type NextFunction, type Request, type Response, type Router } from 'express';
 import fs from 'fs'
 import path from 'path'
 
@@ -13,8 +13,8 @@ const client = new OpenAI({ baseURL: endpoint, apiKey: token, maxRetries: 0 });
 const modelsList: string[] = ["openai/gpt-4.1", "openai/gpt-4o", "DeepSeek-V3-0324", "openai/gpt-4.1-nano", "openai/gpt-4.1-mini", "openai/gpt-4o-mini"];
 const router: Router = express.Router()
 const prisma = new PrismaClient()
-const fillGapPrompt = loadPrompt("fill-gap.txt")
-const singleChoicePrompt = loadPrompt("single-choice.txt")
+const fillGapPrompt = loadPrompt("fill_gap.txt")
+const singleChoicePrompt = loadPrompt("single_choice.txt")
 
 function loadPrompt(fileName: string): string {
     const filePath = path.join(__dirname, "..", "prompts", fileName)
@@ -112,7 +112,7 @@ async function chooseFlashcards(questionsAmount: number, quizId: number, languag
     let phrases: string
     if (languageSide === "FRONT") {
         if (isSingleChoice) {
-            let result: {
+            const result: {
                 data: {
                     [key: string]: any
                 }
@@ -140,7 +140,7 @@ async function chooseFlashcards(questionsAmount: number, quizId: number, languag
     }
     else {
         if (isSingleChoice) {
-            let result: {
+            const result: {
                 data: {
                     [key: string]: any
                 }
@@ -200,7 +200,7 @@ router.post("/first-letter-gap", async (req: Request, res: Response, next: NextF
         const subtasks = await sendAIRequest(fillGapPrompt, phrases)
 
         // This part is for changing the first underscore in the gap to the first letter of the phrase, because weaker models cannot handle it for multi-word phrases according to my tests
-        for (let resultIndex in subtasks.data) {
+        for (const resultIndex in subtasks.data) {
             subtasks.data[resultIndex].sentence = subtasks.data[resultIndex].sentence.replace("_", subtasks.data[resultIndex].phrase[0])
         }
 

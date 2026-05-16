@@ -1,17 +1,39 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 import { defineConfig } from 'eslint/config'
 
+const tsRecommendedRules = tsPlugin.configs.recommended.rules ?? {}
+
 export default defineConfig([
+    {
+        ignores: ['generated/**', 'dist/**', 'prisma.config.ts']
+    },
+    {
+        files: ['eslint.config.mjs'],
+        languageOptions: {
+            globals: globals.node
+        }
+    },
     js.configs.recommended,
-    ...tsPlugin.configs.recommended,
     {
         files: ['**/*.ts'],
         languageOptions: {
-            globals: globals.node
+            globals: globals.node,
+            parser: tsParser,
+            parserOptions: {
+                ecmaVersion: 'latest',
+                sourceType: 'module',
+                project: './tsconfig.json',
+                tsconfigRootDir: process.cwd()
+            }
+        },
+        plugins: {
+            '@typescript-eslint': tsPlugin
         },
         rules: {
+            ...tsRecommendedRules,
             'no-console': 'warn',
             'no-debugger': 'error',
             'eqeqeq': ['error', 'always'],

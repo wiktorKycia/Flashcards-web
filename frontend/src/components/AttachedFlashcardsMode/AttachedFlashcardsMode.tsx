@@ -15,9 +15,7 @@ export default function AttachedFlashcardsMode(
     const [isTrackingProgress, setIsCheckingProgress] = useState<boolean>(false)
     const [flashcardsIterator, setFlashcardsIterator] = useState<number>(0)
 
-    const [flashcards, setFlashcards] = useState<Array<Flashcard>>(
-        props.flashcards
-    )
+    const [flashcards, setFlashcards] = useState<Array<Flashcard>>(() => props.flashcards)
 
     function handleShuffle() {
         const array = [...flashcards]
@@ -43,6 +41,16 @@ export default function AttachedFlashcardsMode(
     const authInfo = useAuth()
 
     const isLoggedIn = !!authInfo.token
+
+    if (flashcards.length === 0) {
+        return (
+            <Container cssClassName="container-positioner">
+                <div className={styles.OptionsArrowsContainerIterator}>
+                    Ten quiz jeszcze nie ma fiszek
+                </div>
+            </Container>
+        )
+    }
 
     return (
         <>

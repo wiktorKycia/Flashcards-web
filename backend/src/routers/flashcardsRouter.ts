@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import express, { Router, Request, Response, NextFunction } from "express"
-
+import express, { type Router, type Request, type Response, type NextFunction } from "express"
 
 const router: Router = express.Router()
 const prisma = new PrismaClient()
@@ -11,19 +10,15 @@ interface FlashcardParams {
 
 interface FlashcardCreate {
     starred?: boolean
-    frontLanguage: string
-    backLanguage: string
     front: string
     back: string
     quizId: number
 }
 
 interface FlashcardUpdate {
-    starred: boolean
-    frontLanguage: string
-    backLanguage: string
-    front: string
-    back: string
+    starred?: boolean
+    front?: string
+    back?: string
 }
 router.get("/:id(\\d+)", async (req: Request<FlashcardParams>, res: Response, next: NextFunction) => {
     try {

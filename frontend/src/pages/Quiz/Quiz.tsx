@@ -2,26 +2,37 @@ import Person from '@/components/Person'
 import Container from '@/components/Container'
 import AttachedFlashcardsMode from '@/components/AttachedFlashcardsMode'
 import ButtonTop from '@/components/ButtonTop'
-// import ToolBar from '@/components/ToolBar'
 import styles from './Quiz.module.scss'
 import { useParams } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import ListedFlashcards from '@/components/ListedFlashcards'
 import { useAuth } from '@/context/AuthContext.tsx'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { useQuizData } from '@/hooks/useQuizData.ts'
+import { useCheckIfLoggedIn } from '@/hooks/useCheckIfLoggedIn.ts'
+import { useDeleteQuiz } from '@/hooks/useDeleteQuiz.ts'
 
 export default function Quiz() {
     const id: number = parseInt(useParams().id as string)
+    const navigate = useNavigate()
     const { data, isLoading, isError, error } = useQuizData(id)
     console.log(data, isLoading, isError, error)
 
     let isUserAuthor = true
 
-    const authInfo = useAuth()
+    const auth = useAuth()
+    const isLoggedIn = useCheckIfLoggedIn()
+    const { isDeleting, deleteError, handleDeleteQuiz } = useDeleteQuiz()
 
-    const isLoggedIn = !!authInfo.token
-    if (isLoggedIn && authInfo.user != null && data != undefined) {
-        isUserAuthor = authInfo.user.id == data.quiz.authorId
+    if (isLoggedIn && auth.user != null && data != undefined) {
+        isUserAuthor = auth.user.id == data.quiz.authorId
+    }
+
+    async function handleDeleteQuizClick() {
+        await handleDeleteQuiz({
+            id,
+            onSuccess: () => navigate('/')
+        })
     }
 
     return (
@@ -35,7 +46,7 @@ export default function Quiz() {
                         <Container
                             cssClassName={'container-borderless ' + styles.MainTitleContainer}
                         >
-                            <h1>{data.quiz.name || 'Nazwa quizu'}</h1>
+                            <h1>{data.quiz.name || 'Quiz bez nazwy'}</h1>
                             {data.quiz.description && (
                                 <p>{data.quiz.description}</p>
                             )}
@@ -55,11 +66,16 @@ export default function Quiz() {
                                 )}
                                 {isUserAuthor && (
                                     <>
-                                        <button>edytuj</button>
-                                        <button>usuń</button>
+                                        <button onClick={() => navigate(`/quiz/${id}/edit`)}>edytuj</button>
+                                        <button onClick={handleDeleteQuizClick} disabled={isDeleting}>
+                                            {isDeleting ? 'Usuwanie...' : 'usuń'}
+                                        </button>
                                     </>
                                 )}
                             </Container>
+                            {deleteError && (
+                                <div className={styles.StatusText}>{deleteError}</div>
+                            )}
                             <Container
                                 cssClassName={'container-borderless ' + styles.MainLearnOptions}
                             >
@@ -73,8 +89,8 @@ export default function Quiz() {
                                     return {
                                         front: flashcard.front,
                                         back: flashcard.back,
-                                        langFront: flashcard.frontLanguage,
-                                        langBack: flashcard.backLanguage
+                                        langFront: data.quiz.frontLanguage,
+                                        langBack: data.quiz.backLanguage
                                     }
                                 })}
                             />
@@ -92,8 +108,8 @@ export default function Quiz() {
                             flashcards={data.flashcards.map((flashcard) => {
                                 return {
                                     database_id: flashcard.id,
-                                    langFront: flashcard.frontLanguage,
-                                    langBack: flashcard.backLanguage,
+                                    langFront: data.quiz.frontLanguage,
+                                    langBack: data.quiz.backLanguage,
                                     front: flashcard.front,
                                     back: flashcard.back,
                                     isStarred: false

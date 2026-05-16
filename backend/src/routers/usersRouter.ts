@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import express, { Router, Request, Response, NextFunction } from "express"
+import express, { type Router, type Request, type Response, type NextFunction } from "express"
 import bcrypt from "bcrypt"
 import fs from 'fs/promises'
 
@@ -178,8 +178,10 @@ router.get("/:userId(\\d+)/quizzes/:quizId(\\d+)", async (req: Request<UserQuizL
         const userId = parseInt(req.params.userId)
         const quizLike = await prisma.userQuizLike.findUnique({
             where: {
-                userId: userId,
-                quizId: quizId,
+                userId_quizId: {
+                    userId: userId,
+                    quizId: quizId,
+                }
             }
         })
 

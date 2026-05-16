@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client"
-import express, { Router, Request, Response, NextFunction } from "express"
-
+import { PrismaClient, type Prisma } from "@prisma/client";
+import express, { type Router, type Request, type Response, type NextFunction } from "express"
 
 const router: Router = express.Router()
 const prisma = new PrismaClient()
@@ -11,13 +10,23 @@ interface QuizParams {
 
 interface QuizCreate {
     name: string
+    frontLanguage: string
+    backLanguage: string
     description?: string
     authorId: number
 }
 
 interface QuizUpdate {
-    name: string
+    name?: string
+    frontLanguage?: string
+    backLanguage?: string
     description?: string
+}
+
+interface QuizFlashcardReplace {
+    front: string
+    back: string
+    starred?: boolean
 }
 
 router.get("/", async (_req: Request, res: Response, next: NextFunction) => {
@@ -110,6 +119,43 @@ router.get("/:id(\\d+)/flashcards", async (req: Request<QuizParams>, res: Respon
         else {
             return res.sendStatus(404)
         }
+    }
+    catch (error) {
+        next(error)
+    }
+})
+
+router.put("/:id(\\d+)/flashcards", async (req: Request<QuizParams>, res: Response, next: NextFunction) => {
+    try {
+        const quizId = parseInt(req.params.id)
+        const flashcards = Array.isArray(req.body) ? (req.body as QuizFlashcardReplace[]) : []
+
+        const replacedFlashcards = await prisma.$transaction(async (transaction: Prisma.TransactionClient) => {
+            await transaction.flashcard.deleteMany({
+                where: {
+                    quizId
+                }
+            })
+
+            if (flashcards.length > 0) {
+                await transaction.flashcard.createMany({
+                    data: flashcards.map((flashcard) => ({
+                        quizId,
+                        front: flashcard.front,
+                        back: flashcard.back,
+                        starred: flashcard.starred ?? false
+                    }))
+                })
+            }
+
+            return transaction.flashcard.findMany({
+                where: {
+                    quizId
+                }
+            })
+        })
+
+        return res.json(replacedFlashcards)
     }
     catch (error) {
         next(error)
