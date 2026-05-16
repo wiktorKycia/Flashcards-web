@@ -13,8 +13,8 @@ const client = new OpenAI({ baseURL: endpoint, apiKey: token, maxRetries: 0 });
 const modelsList: string[] = ["openai/gpt-4.1", "openai/gpt-4o", "DeepSeek-V3-0324", "openai/gpt-4.1-nano", "openai/gpt-4.1-mini", "openai/gpt-4o-mini"];
 const router: Router = express.Router()
 const prisma = new PrismaClient()
-const fillGapPrompt = loadPrompt("fill-gap.txt")
-const singleChoicePrompt = loadPrompt("single-choice.txt")
+const fillGapPrompt = loadPrompt("fill_gap.txt")
+const singleChoicePrompt = loadPrompt("single_choice.txt")
 
 function loadPrompt(fileName: string): string {
     const filePath = path.join(__dirname, "..", "prompts", fileName)
