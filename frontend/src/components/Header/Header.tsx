@@ -12,12 +12,12 @@ export default function Header() {
 
     return (
         <header className={styles.Header}>
-            <div>
+            <div className={styles.HeaderLeft}>
                 <HamburgerButton />
                 <Logo />
             </div>
             <SearchBar />
-            <div>
+            <div className={styles.HeaderRight}>
                 <ThemeToggler toggleFn={toggleTheme} isLight={theme === "light"}/>
                 <ButtonAdd />
                 <ProfilePicture />

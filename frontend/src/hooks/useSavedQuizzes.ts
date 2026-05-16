@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 
-const getData = async (userId: number): Promise<(SavedQuiz & { quiz: Quiz })[]> => {
+
+const getData = async (userId: number): Promise<Quiz[]> => {
+
     const quizResponse = await fetch(`/api/users/${userId}/saved-quizzes`)
 
     if (!quizResponse.ok) {

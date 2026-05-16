@@ -1,9 +1,8 @@
-import Header from '@/components/Header'
 import Person from '@/components/Person'
 import Container from '@/components/Container'
 import AttachedFlashcardsMode from '@/components/AttachedFlashcardsMode'
 import ButtonTop from '@/components/ButtonTop'
-import ToolBar from '@/components/ToolBar'
+// import ToolBar from '@/components/ToolBar'
 import styles from './Quiz.module.scss'
 import { useParams } from 'react-router'
 import ListedFlashcards from '@/components/ListedFlashcards'
@@ -16,7 +15,7 @@ export default function Quiz() {
     const { data, isLoading, isError, error } = useQuizData(id)
     console.log(data, isLoading, isError, error)
 
-    let isUserAuthor = false
+    let isUserAuthor = true
 
     const authInfo = useAuth()
 
@@ -27,82 +26,79 @@ export default function Quiz() {
 
     return (
         <>
-            <Header />
             <main className={styles.Main}>
-                <ToolBar />
+                {/*{isLoggedIn && (<ToolBar />)}*/}
                 {isError && <div>wystąpił błąd</div>}
                 {isLoading && <LoadingSpinner />}
                 {!isLoading && !isError && data && (
-                    <div className={styles.MainRight}>
-                        <h1>{data.quiz.name || 'Nazwa quizu'}</h1>
-                        {data.quiz.description && (
-                            <p>{data.quiz.description}</p>
-                        )}
+                    <div className={styles.MainWrapper}>
                         <Container
-                            cssClassName={'container-vertical-borderless'}
+                            cssClassName={'container-borderless ' + styles.MainTitleContainer}
                         >
-                            <button>eksport do pliku</button>
-                            <button>udostępnij</button>
+                            <h1>{data.quiz.name || 'Nazwa quizu'}</h1>
+                            {data.quiz.description && (
+                                <p>{data.quiz.description}</p>
+                            )}
+                        </Container>
+                        <Container cssClassName={'container-positioner ' + styles.MainOptionsContaier}>
+                            <Container
+                                cssClassName={'container-borderless ' + styles.MainOptions}
+                            >
+                                <button>eksport do pliku</button>
+                                <button>udostępnij</button>
 
-                            {isLoggedIn && (
-                                <>
-                                    <button>zapisz</button>
-                                    <button>kopiuj</button>
-                                </>
-                            )}
-                            {isUserAuthor && (
-                                <>
-                                    <button>edytuj</button>
-                                    <button>usuń</button>
-                                </>
-                            )}
+                                {isLoggedIn && (
+                                    <>
+                                        <button>zapisz</button>
+                                        <button>kopiuj</button>
+                                    </>
+                                )}
+                                {isUserAuthor && (
+                                    <>
+                                        <button>edytuj</button>
+                                        <button>usuń</button>
+                                    </>
+                                )}
+                            </Container>
+                            <Container
+                                cssClassName={'container-borderless ' + styles.MainLearnOptions}
+                            >
+                                <button>ucz się</button>
+                                <button>dopasowania</button>
+                            </Container>
                         </Container>
-                        <Container
-                            cssClassName={'container-vertical-borderless'}
-                        >
-                            <button>ucz się</button>
-                            <button>dopasowania</button>
-                        </Container>
-                        <Container>
+                        <Container cssClassName={'container-borderless'}>
                             <AttachedFlashcardsMode
                                 flashcards={data.flashcards.map((flashcard) => {
                                     return {
-                                        front: flashcard.side1,
-                                        back: flashcard.side2,
-                                        langFront: flashcard.language1,
-                                        langBack: flashcard.language2
+                                        front: flashcard.front,
+                                        back: flashcard.back,
+                                        langFront: flashcard.frontLanguage,
+                                        langBack: flashcard.backLanguage
                                     }
                                 })}
                             />
                         </Container>
                         <Container
-                            cssClassName={'container-vertical-borderless'}
+                            cssClassName={'container-borderless ' + styles.MainAuthor}
                         >
-                            <Person name={'John doe'} title={'author'} />
-                            <button>like</button>
-                            <button>dislike</button>
+                            <Person id={1} name={'John doe'} title={'author'} />
+                            <Container cssClassName={'container-positioner ' + styles.MainAuthorLikeContainer}>
+                                <button>like</button>
+                                <button>dislike</button>
+                            </Container>
                         </Container>
                         <ListedFlashcards
                             flashcards={data.flashcards.map((flashcard) => {
                                 return {
                                     database_id: flashcard.id,
-                                    langFront: flashcard.language1,
-                                    langBack: flashcard.language2,
-                                    front: flashcard.side1,
-                                    back: flashcard.side2,
+                                    langFront: flashcard.frontLanguage,
+                                    langBack: flashcard.backLanguage,
+                                    front: flashcard.front,
+                                    back: flashcard.back,
                                     isStarred: false
                                 }
                             })}
-                            // flashcards={[
-                            //     {
-                            //         database_id: 1,
-                            //         front: 'front',
-                            //         back: 'back',
-                            //         langFront: 'english',
-                            //         langBack: 'english',
-                            //         isStarred: true
-                            //     }
-                            // ]}
                             isUserLoggedIn={isLoggedIn}
                             isUserAuthor={isUserAuthor}
                         />

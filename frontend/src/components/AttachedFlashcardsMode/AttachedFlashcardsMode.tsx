@@ -1,6 +1,9 @@
 import BigFlashcard from '../BigFlashcard'
 import { useState } from 'react'
 import type Flashcard from '../../types/Flashcard.ts'
+import { useAuth } from '@/context/AuthContext.tsx'
+import styles from './AttachedFlashcardsMode.module.scss'
+import Container from '@/components/Container'
 
 interface AttachedFlashcardsModeProps {
     flashcards: Flashcard[]
@@ -37,39 +40,53 @@ export default function AttachedFlashcardsMode(
         }
     }
 
+    const authInfo = useAuth()
+
+    const isLoggedIn = !!authInfo.token
+
     return (
         <>
             <div>
                 <BigFlashcard
                     front={flashcards[flashcardsIterator].front}
                     back={flashcards[flashcardsIterator].back}
-                />{' '}
+                />
                 {/* oddzielny komponent na wielką fiszkę */}
             </div>
-            <div>
-                <label htmlFor="track_progress">Śledź postępy</label>{' '}
-                {/*tylko dla użytkowników zalogowanych*/}
-                <input
-                    type="checkbox"
-                    name="track_progress"
-                    id="track_progress"
-                    checked={isTrackingProgress}
-                    onClick={() =>
-                        setIsCheckingProgress((prevState) => !prevState)
-                    }
-                />
-                <button onClick={handleDecrement}>←</button>
-                <div>
-                    {flashcardsIterator + 1} / {flashcards.length}
-                </div>
-                <button onClick={handleIncrement}>→</button>
-                {isTrackingProgress && (
-                    <button>previous</button> //*tylko jak checkbox ze śledzeniem postępów jest zaznaczony*/}
-                )}
-                <button onClick={handleShuffle}>change order</button>{' '}
-                {/*takie tasowanie*/}
-                <button>settings</button>
-                <button>full screeen</button>
+            <div className={styles.Options}>
+                <Container cssClassName={'container-positioner ' + styles.OptionsArrowsContainer}>
+                    <button onClick={handleDecrement}>←</button>
+                    <div className={styles.OptionsArrowsContainerIterator}>
+                        {flashcardsIterator + 1} / {flashcards.length}
+                    </div>
+                    <button onClick={handleIncrement}>→</button>
+                </Container>
+
+                <Container cssClassName={'container-positioner ' + styles.OptionsContainer}>
+                    {isLoggedIn && (
+                        <div className={styles.TrackProgress}>
+                            <label htmlFor="track_progress">Śledź postępy</label>
+                            {/*tylko dla użytkowników zalogowanych*/}
+                            <input
+                                type="checkbox"
+                                name="track_progress"
+                                id="track_progress"
+                                checked={isTrackingProgress}
+                                onClick={() =>
+                                    setIsCheckingProgress((prevState) => !prevState)
+                                }
+                            />
+                        </div>
+                    )}
+
+                    {isTrackingProgress && (
+                        <button className={styles.ButtonPrev}>previous</button> //*tylko jak checkbox ze śledzeniem postępów jest zaznaczony*/}
+                    )}
+                    <button onClick={handleShuffle} className={styles.ButtonShuffle}>change order</button>
+                    {/*takie tasowanie*/}
+                    <button className={styles.ButtonSettings}>settings</button>
+                    <button className={styles.ButtonFullScreen}>full screeen</button>
+                </Container>
             </div>
         </>
     )

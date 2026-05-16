@@ -1,0 +1,17 @@
+.Logo {
+    padding: 0.4rem;
+    margin: 0;
+    background-color: transparent;
+
+    &:hover {
+        background-color: transparent;
+    }
+
+    &:hover > img {
+        transform: scale(1.2);
+    }
+
+    img {
+        transition: var(--transition);
+    }
+}

@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import { useLogin } from '@/hooks/useLogin.ts'
-import Header from '@/components/Header'
-import ToolBar from '@/components/ToolBar'
 import styles from './Login.module.scss'
 import type { NavigateFunction } from 'react-router'
 
@@ -40,32 +38,28 @@ export default function Login() {
 
     return (
         <>
-            <Header />
             <main className={styles.Main}>
-                <ToolBar />
-                <div className={styles.MainRight}>
-                    <form
-                        onSubmit={handleSubmit}
-                        className={styles.FormContainer}
-                    >
-                        <h2>Login</h2>
-                        <input
-                            type="text"
-                            placeholder="login"
-                            onChange={(e) =>
-                                setForm({ ...form, login: e.target.value })
-                            }
-                        />
-                        <input
-                            type="password"
-                            placeholder="hasło"
-                            onChange={(e) =>
-                                setForm({ ...form, password: e.target.value })
-                            }
-                        />
-                        <button type="submit">Login</button>
-                    </form>
-                </div>
+                <form
+                    onSubmit={handleSubmit}
+                    className={styles.FormContainer}
+                >
+                    <h1>Login</h1>
+                    <input
+                        type="text"
+                        placeholder="login"
+                        onChange={(e) =>
+                            setForm({ ...form, login: e.target.value })
+                        }
+                    />
+                    <input
+                        type="password"
+                        placeholder="hasło"
+                        onChange={(e) =>
+                            setForm({ ...form, password: e.target.value })
+                        }
+                    />
+                    <button type="submit">Login</button>
+                </form>
             </main>
         </>
     )

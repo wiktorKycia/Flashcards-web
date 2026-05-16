@@ -1,2 +1,39 @@
 .UserProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 2rem;
+
+    h1 {
+        color: var(--color-text-primary);
+        font-size: 2.8rem;
+    }
+}
+
+.QuizItem {
+    background-color: var(--color-surface);
+    border: var(--border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: var(--color-text-primary);
+    width: 100%;
+    max-width: 600px;
+    transition: var(--transition);
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: var(--shadow);
+    }
+
+    h2 {
+        color: var(--color-accent2);
+        margin-bottom: 0.5rem;
+        font-size: 2rem;
+    }
+
+    p {
+        color: var(--color-text-secondary);
+        font-size: 1.4rem;
+    }
 }

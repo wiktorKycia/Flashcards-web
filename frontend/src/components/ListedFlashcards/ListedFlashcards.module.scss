@@ -1,2 +1,17 @@
 .ListedFlashcards {
+    margin-block: 5rem;
+    padding-inline: 2rem;
+
+    &Heading {
+        color: var(--color-text-primary);
+        font-size: 2.4rem;
+    }
+    &FiltersContainer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+    &FlashcardsContainer {
+        gap: 1rem;
+    }
 }

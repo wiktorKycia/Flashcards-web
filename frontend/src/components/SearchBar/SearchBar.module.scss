@@ -1,17 +1,20 @@
 .SearchBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     &Input {
         min-width: 200px;
         width: 30rem;
-        height: 1.6rem;
-        font-size: 1.2rem;
-        background-color: lightgreen;
-        border-radius: 1rem;
-        padding: 0.5rem;
+        font-size: 1.6rem;
+        background-color: var(--color-surface);
+        border-radius: 2rem;
+        padding: 1rem;
         border: none;
-        color: forestgreen;
+        color: var(--color-text-primary);
     }
 
     &Input:focus {
-        border: 2px solid green;
+        border: var(--border-thick);
     }
 }

@@ -1,31 +1,32 @@
 .ButtonAdd {
-    background-color: forestgreen;
-    color: whitesmoke;
+    background-color: var(--color-accent2);
+    color: var(--color-text-buttons);
     border-radius: 100%;
     border: none;
     margin-inline: 1.2rem;
-    width: 2rem;
-    height: 2rem;
+    width: 2.4rem;
+    height: 2.4rem;
     font-size: 1rem;
     font-weight: bolder;
-
-    //position: relative;
-    //display: inline-block;
-    //border-bottom: 1px dotted black; /* Add dots under the hoverable text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     cursor: pointer;
 
-    &:hover .TooltipText {
+    &:hover+.TooltipText {
         visibility: visible;
     }
 }
 .TooltipText {
     visibility: hidden; /* Hidden by default */
-    width: 130px;
-    background-color: black;
-    color: #ffffff;
+    background-color: var(--color-accent4);
+    color: var(--color-text-buttons);
     text-align: center;
-    padding: 5px 0;
+    padding: 0.6rem;
     border-radius: 6px;
     position: absolute;
+    top: 5rem;
+    right: 4rem;
     z-index: 1; /* Ensure tooltip is displayed above content */
 }

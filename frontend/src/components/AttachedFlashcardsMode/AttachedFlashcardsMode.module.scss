@@ -1,0 +1,55 @@
+.Options {
+
+    &ArrowsContainer
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        margin-block: 2rem !important;
+
+        font-size: 2.4rem;
+
+        &Iterator
+        {
+            text-align: center;
+            color: var(--color-text-primary);
+        }
+    }
+
+    &Container
+    {
+        display: grid;
+        grid-template-columns: 3fr 6fr 2fr 2fr 2fr 2fr;
+        gap: 1rem;
+        margin-block: 2rem !important;
+
+        .TrackProgress {
+            grid-column: 1/2;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ButtonPrev {
+            grid-column: 3/4;
+        }
+
+        .ButtonShuffle {
+            grid-column: 4/5;
+        }
+
+        .ButtonSettings {
+            grid-column: 5/6;
+        }
+
+        .ButtonFullScreen {
+            grid-column: 6/7;
+        }
+    }
+}
