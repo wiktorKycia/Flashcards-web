@@ -33,16 +33,18 @@ export default function UserSettings() {
                 <button>Edit username</button>
             </div>
 
+
             {isError && <p style={{ color: 'var(--color-accent2)' }}>wystąpił błąd</p>}
             {isLoading && <LoadingSpinner />}
-            {data ? data.map((quiz) => (
+            {data && data.map((quiz) => (
                 <Container key={quiz.id}>
                     <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
                         <h2>{quiz.name}</h2>
                         <p>{quiz.description}</p>
                     </Link>
                 </Container>
-            )):null}
+            ))}
+
         </div>
     )
 }

@@ -14,39 +14,6 @@ interface SavedQuizCreateAndUpdate {
     quizId: number
     folderId?: number
 }
-
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const userId = req.query.userId ? parseInt(req.query.userId as string) : undefined
-        if(!userId)
-        {
-            return res.sendStatus(400)
-        }
-
-        const quizzes = await prisma.savedQuiz.findMany({
-            where: {
-                userId: userId
-            },
-            select: {
-                quiz: true
-            }
-        })
-
-        if(quizzes)
-        {
-            return res.json(quizzes)
-        }
-        else
-        {
-            return res.sendStatus(404)
-        }
-    }
-    catch (error)
-    {
-        next(error)
-    }
-})
-
 router.get("/:id(\\d+)", async (req: Request<SavedQuizParams>, res: Response, next: NextFunction) => {
     try {
         const savedQuizId: number = parseInt(req.params.id)
