@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import express, { Router, Request, Response, NextFunction } from "express"
+import express, { type Router, type Request, type Response, type NextFunction } from "express"
 
 const router: Router = express.Router()
 const prisma = new PrismaClient()

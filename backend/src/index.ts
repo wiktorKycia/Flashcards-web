@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express, { type NextFunction, type Request, type Response } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
@@ -11,7 +11,7 @@ import savedQuizzesRouter from "./routers/savedQuizzesRouter"
 import quizzesLikesRouter from "./routers/quizzesLikesRouter"
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library'
 import authRouter from './routers/auth'
-import { MongoClient, Collection } from "mongodb"
+import { MongoClient, type Collection } from "mongodb"
 
 const myenv = dotenv.config({ path: '.env.app' })
 dotenvExpand.expand(myenv)
@@ -29,7 +29,7 @@ let requestsCollection: Collection
 let connectedMongo: boolean = false
 
 // Creating connection with MongoDB
-;(async () => {
+void (async () => {
     if (!mongoURL) {
         console.warn(`MongoDB URL is missing`)
         return

@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client"
-import express, { Router, Request, Response, NextFunction } from "express"
+import { PrismaClient, type Prisma } from "@prisma/client";
+import express, { type Router, type Request, type Response, type NextFunction } from "express"
 
 const router: Router = express.Router()
 const prisma = new PrismaClient()
@@ -130,7 +130,7 @@ router.put("/:id(\\d+)/flashcards", async (req: Request<QuizParams>, res: Respon
         const quizId = parseInt(req.params.id)
         const flashcards = Array.isArray(req.body) ? (req.body as QuizFlashcardReplace[]) : []
 
-        const replacedFlashcards = await prisma.$transaction(async (transaction) => {
+        const replacedFlashcards = await prisma.$transaction(async (transaction: Prisma.TransactionClient) => {
             await transaction.flashcard.deleteMany({
                 where: {
                     quizId

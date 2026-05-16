@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import express, { Router, Request, Response, NextFunction } from "express"
+import express, { type Router, type Request, type Response, type NextFunction } from "express"
 import bcrypt from "bcrypt"
 import fs from 'fs/promises'
 
