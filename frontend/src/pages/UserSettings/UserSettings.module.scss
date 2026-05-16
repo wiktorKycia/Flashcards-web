@@ -11,6 +11,22 @@
         margin-bottom: 1rem;
     }
 
+    &Section {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 60%;
+        gap: 2rem;
+    }
+
+    &Left {
+
+    }
+
+    &Right {
+
+    }
+
     .ButtonGroup {
         display: flex;
         gap: 1rem;
