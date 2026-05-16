@@ -16,7 +16,7 @@ interface QuizProgressCreate {
 }
 
 interface QuizProgressUpdate {
-    isStarred?: boolean
+    isStarred: boolean // only the isStarred parameter will be updated, prisma.update always returns the whole object even if we specify only one parameter
 }
 
 router.get("/:id(\\d+)", async (req: Request<QuizProgressParams>, res: Response, next: NextFunction) => {
