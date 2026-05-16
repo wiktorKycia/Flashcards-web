@@ -2,8 +2,6 @@ import styles from './UserSettings.module.scss'
 import { useAuth } from '@/context/AuthContext.tsx'
 import Container from '@/components/Container'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
-import { Link } from 'react-router'
 import { useLoggedInOnly } from '@/hooks/useLoggedInOnly.ts'
 import FieldGroup from '@/components/FieldGroup'
 import type { ChangeEvent } from 'react'
@@ -12,11 +10,6 @@ export default function UserSettings() {
     useLoggedInOnly()
 
     const auth = useAuth()
-
-    const { data, isLoading, isError } = useSavedQuizzes(
-        auth.user?.id as number
-    )
-    console.log(data)
 
     return (
         <main className={styles.UserSettings}>
@@ -60,18 +53,6 @@ export default function UserSettings() {
             ):(
                 <LoadingSpinner />
             )}
-            {/*Move it to the user profile*/}
-            {isError && <p style={{ color: 'var(--color-accent2)' }}>wystąpił błąd</p>}
-            {isLoading && <LoadingSpinner />}
-            {data && data.map((quiz) => (
-                <Container key={quiz.id}>
-                    <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
-                        <h2>{quiz.name}</h2>
-                        <p>{quiz.description}</p>
-                    </Link>
-                </Container>
-            ))}
-
         </main>
     )
 }
