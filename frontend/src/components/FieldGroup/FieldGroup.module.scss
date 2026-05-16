@@ -1,0 +1,18 @@
+@mixin fieldGroup {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 1.6rem;
+    margin-block: 1rem;
+}
+
+.FieldGroupVertical {
+    @include fieldGroup;
+    flex-direction: column;
+}
+
+.FieldGroupHorizontal {
+    @include fieldGroup;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
