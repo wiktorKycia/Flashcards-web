@@ -10,6 +10,7 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 import { useUpdateQuiz } from '@/hooks/useUpdateQuiz.ts'
 import { useReplaceQuizFlashcards } from '@/hooks/useReplaceQuizFlashcards.ts'
 import { useDeleteQuiz } from '@/hooks/useDeleteQuiz.ts'
+import FieldGroup from '@/components/FieldGroup'
 
 interface DraftFlashcard {
     id?: number
@@ -203,73 +204,66 @@ export default function QuizEdit(){
                         className={styles.MainWrapper}
                         onSubmit={handleButtonSave}
                     >
-                        <div className={styles.FieldGroup}>
-                            <label htmlFor="quiz_name">Nazwa quizu:</label>
-                            <input
-                                id="quiz_name"
-                                type="text"
-                                placeholder="Angielski, dział 2, lekcja 1"
-                                value={draft.quiz.name}
-                                onChange={(event) =>
-                                    handleQuizFieldChange(
-                                        'name',
-                                        event.target.value
-                                    )
-                                }
-                            />
-                        </div>
+                        <FieldGroup
+                            labelText="Nazwa quizu:"
+                            inputHTMLId="quiz_name"
+                            inputType="text"
+                            inputPlaceholder="Angielski, dział 2, lekcja 1"
+                            inputValue={draft.quiz.name}
+                            onInputChange={(event) =>
+                                handleQuizFieldChange(
+                                    'name',
+                                    event.target.value
+                                )
+                            }
+                            isVertical={true}
+                        />
 
-                        <div className={styles.FieldGroup}>
-                            <label htmlFor="quiz_description">Opis:</label>
-                            <textarea
-                                id="quiz_description"
-                                value={draft.quiz.description}
-                                onChange={(event) =>
-                                    handleQuizFieldChange(
-                                        'description',
-                                        event.target.value
-                                    )
-                                }
-                                className={styles.DescriptionInput}
-                            />
-                        </div>
+                        <FieldGroup
+                            labelText="Opis:"
+                            inputHTMLId="quiz_description"
+                            inputType="text"
+                            inputValue={draft.quiz.description}
+                            onInputChange={(event) =>
+                                handleQuizFieldChange(
+                                    'description',
+                                    event.target.value
+                                )
+                            }
+                            isVertical={true}
+                            useTextarea={true}
+                        />
 
                         <div className={'container-horizontal-borderless'}>
-                            <div className={styles.FieldGroup}>
-                                <label htmlFor="quiz_front_language">
-                                    Język przodu:
-                                </label>
-                                <input
-                                    id="quiz_front_language"
-                                    type="text"
-                                    placeholder="en"
-                                    value={draft.quiz.frontLanguage}
-                                    onChange={(event) =>
-                                        handleQuizFieldChange(
-                                            'frontLanguage',
-                                            event.target.value
-                                        )
-                                    }
-                                />
-                            </div>
+                            <FieldGroup
+                                labelText="Język przodu:"
+                                inputHTMLId="quiz_front_language"
+                                inputType="text"
+                                inputPlaceholder="en"
+                                inputValue={draft.quiz.frontLanguage}
+                                onInputChange={(event) =>
+                                    handleQuizFieldChange(
+                                        'frontLanguage',
+                                        event.target.value
+                                    )
+                                }
+                                isVertical={true}
+                            />
 
-                            <div className={styles.FieldGroup}>
-                                <label htmlFor="quiz_back_language">
-                                    Język tyłu:
-                                </label>
-                                <input
-                                    id="quiz_back_language"
-                                    type="text"
-                                    placeholder="pl"
-                                    value={draft.quiz.backLanguage}
-                                    onChange={(event) =>
-                                        handleQuizFieldChange(
-                                            'backLanguage',
-                                            event.target.value
-                                        )
-                                    }
-                                />
-                            </div>
+                            <FieldGroup
+                                labelText="Język tyłu:"
+                                inputHTMLId="quiz_back_language"
+                                inputType="text"
+                                inputPlaceholder="pl"
+                                inputValue={draft.quiz.backLanguage}
+                                onInputChange={(event) =>
+                                    handleQuizFieldChange(
+                                        'backLanguage',
+                                        event.target.value
+                                    )
+                                }
+                                isVertical={true}
+                            />
                         </div>
 
                         <section className={styles.FlashcardsSection}>

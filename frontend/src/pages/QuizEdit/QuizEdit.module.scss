@@ -20,28 +20,7 @@
     box-shadow: var(--shadow-big);
 }
 
-.FieldGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
 
-.DescriptionInput {
-    min-height: 10rem;
-    padding: 1rem;
-    border: var(--border);
-    border-radius: 0.5rem;
-    font-size: 1.6rem;
-    color: var(--color-text-primary);
-    background-color: var(--color-surface);
-    resize: vertical;
-
-    &:focus {
-        border-color: var(--color-accent);
-        box-shadow: var(--shadow);
-        outline: none;
-    }
-}
 
 .FlashcardsSection {
     display: flex;
