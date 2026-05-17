@@ -1,13 +1,17 @@
-import { useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import { useUserInfo } from '@/hooks/useUserInfo.ts'
 import Container from '@/components/Container'
 import styles from './UserProfile.module.scss'
 import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
-import { Link } from 'react-router'
 import { useAuth } from '@/context/AuthContext.tsx'
 import LoadingSpinner from '@/components/LoadingSpinner'
 
+
 export default function UserProfile() {
+    useLoggedInOnly()
+
+    const auth = useAuth()
+
     const userId: number = parseInt(useParams().id as string)
 
     const auth = useAuth()
@@ -37,6 +41,7 @@ export default function UserProfile() {
                 ))}
             
 
+
             {isError && <p style={{ color: 'var(--color-accent2)' }}>wystąpił błąd</p>}
             {isLoading && <LoadingSpinner />}
             {data && data.map((quiz) => (
@@ -47,6 +52,7 @@ export default function UserProfile() {
                     </Link>
                 </Container>
             ))} */}
+
         </div>
     )
 }
