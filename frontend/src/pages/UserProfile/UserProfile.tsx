@@ -36,10 +36,10 @@ export default function UserProfile() {
                     <Container>
                         {data.createdQuizzes.map((quiz) => (
                             <Container key={quiz.id}>
-                                <div className={styles.QuizItem}>
+                                <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
                                     <h2>{quiz.name}</h2>
                                     <p>{quiz.description}</p>
-                                </div>
+                                </Link>
                             </Container>
                         ))}
                     </Container>
