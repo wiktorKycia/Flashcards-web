@@ -1,16 +1,15 @@
-import { Link, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import { useUserInfo } from '@/hooks/useUserInfo.ts'
-import Container from '@/components/Container'
+// import Container from '@/components/Container'
 import styles from './UserProfile.module.scss'
-import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
+// import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
 import { useAuth } from '@/context/AuthContext.tsx'
-import LoadingSpinner from '@/components/LoadingSpinner'
+// import LoadingSpinner from '@/components/LoadingSpinner'
+import { useLoggedInOnly } from '@/hooks/useLoggedInOnly'
 
 
 export default function UserProfile() {
     useLoggedInOnly()
-
-    const auth = useAuth()
 
     const userId: number = parseInt(useParams().id as string)
 
