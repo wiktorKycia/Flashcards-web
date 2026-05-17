@@ -1,49 +1,26 @@
 import { useQuery } from '@tanstack/react-query'
+import resolvePromise from '@/helpers/resolvePromise'
 
 const getCreatedQuizzes = async (userId: number): Promise<Quiz[]> => {
     const createdQuizzes = await fetch(`/api/users/${userId}/created-quizzes`)
-
-    if(!createdQuizzes.ok)
-    {
-        throw new Error(`HTTP ${createdQuizzes.status}`)
-    }
-    else
-    {
-        return await createdQuizzes.json()
-    }
+    return resolvePromise<Quiz[]>(createdQuizzes)
 }
 
 const getSavedQuizzes = async (userId: number): Promise<Quiz[]> => {
     const savedQuizzes = await fetch(`/api/users/${userId}/saved-quizzes`)
-
-    if(!savedQuizzes.ok)
-    {
-        throw new Error(`HTTP ${savedQuizzes.status}`)
-    }
-    else
-    {
-        return await savedQuizzes.json()
-    }
+    return resolvePromise<Quiz[]>(savedQuizzes)
 }
 
 const getUserName = async (userId: number): Promise<User> => {
     const userInfo = await fetch(`/api/users/${userId}`)
-
-    if(!userInfo.ok)
-    {
-        throw new Error(`HTTP ${userInfo.status}`)
-    }
-    else 
-    {
-        return await userInfo.json()
-    }
+    return resolvePromise<User>(userInfo)
 }
 
 const getData = async (userId: number, isVisitingSelf: boolean): Promise<UserInfo> => {
     if(isVisitingSelf)
     {
         return {
-            name: await getUserName(userId).name,
+            name: (await getUserName(userId)).name,
             savedQuizzes: await getSavedQuizzes(userId),
             createdQuizzes: await getCreatedQuizzes(userId)
         }
@@ -51,7 +28,7 @@ const getData = async (userId: number, isVisitingSelf: boolean): Promise<UserInf
     else
     {
         return {
-            name: await getUserName(userId).name,
+            name: (await getUserName(userId)).name,
             createdQuizzes: await getCreatedQuizzes(userId)
         }
     }
