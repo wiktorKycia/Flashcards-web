@@ -2,15 +2,29 @@ import { useParams } from 'react-router'
 import { useUserInfo } from '@/hooks/useUserInfo.ts'
 import Container from '@/components/Container'
 import styles from './UserProfile.module.scss'
+import { useSavedQuizzes } from '@/hooks/useSavedQuizzes.ts'
+import { Link } from 'react-router'
+import { useAuth } from '@/context/AuthContext.tsx'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function UserProfile() {
     const userId: number = parseInt(useParams().id as string)
 
-    const { data } = useUserInfo(userId)
+    const auth = useAuth()
+
+    const userInfo = useUserInfo(userId)
+    console.log(userInfo);
+    
+
+    // const { data, isLoading, isError } = useSavedQuizzes(
+    //     auth.user?.id as number
+    // )
 
     return (
         <div className={styles.UserProfile}>
-            {data && <h1>{data.name}</h1>}
+            Hello world from user profile!
+            visiting user id: {auth.user?.id}
+            {/* {data && <h1>{data.name}</h1>}
             {data &&
                 data.createdQuizzes.map((quiz) => (
                     <Container key={quiz.id}>
@@ -21,6 +35,18 @@ export default function UserProfile() {
                         </div>
                     </Container>
                 ))}
+            
+
+            {isError && <p style={{ color: 'var(--color-accent2)' }}>wystąpił błąd</p>}
+            {isLoading && <LoadingSpinner />}
+            {data && data.map((quiz) => (
+                <Container key={quiz.id}>
+                    <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
+                        <h2>{quiz.name}</h2>
+                        <p>{quiz.description}</p>
+                    </Link>
+                </Container>
+            ))} */}
         </div>
     )
 }
