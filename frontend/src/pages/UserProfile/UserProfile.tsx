@@ -32,24 +32,33 @@ export default function UserProfile() {
             {data && (
                 <>
                     <h1>{data.name}</h1>
+                    <h2>Utworznone quizy</h2>
+                    <Container>
+                        {data.createdQuizzes.map((quiz) => (
+                            <Container key={quiz.id}>
+                                <div className={styles.QuizItem}>
+                                    <h2>{quiz.name}</h2>
+                                    <p>{quiz.description}</p>
+                                </div>
+                            </Container>
+                        ))}
+                    </Container>
 
-                    {data.createdQuizzes.map((quiz) => (
-                        <Container key={quiz.id}>
-                            <div className={styles.QuizItem}>
-                                <h2>{quiz.name}</h2>
-                                <p>{quiz.description}</p>
-                            </div>
-                        </Container>
-                    ))}
-
-                    {data.savedQuizzes && data.savedQuizzes.map((quiz) => (
-                        <Container key={quiz.id}>
-                            <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
-                                <h2>{quiz.name}</h2>
-                                <p>{quiz.description}</p>
-                            </Link>
-                        </Container>
-                    ))}
+                    {data.savedQuizzes &&(
+                        <>
+                            <h2>Zapisane quizy</h2>
+                            <Container>
+                                {data.savedQuizzes.map((quiz) => (
+                                    <Container key={quiz.id}>
+                                        <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
+                                            <h2>{quiz.name}</h2>
+                                            <p>{quiz.description}</p>
+                                        </Link>
+                                    </Container>
+                                ))}
+                            </Container>
+                        </>
+                    )}
                 </>
             )}
         </main>
