@@ -1,0 +1,138 @@
+services:
+  database:
+    image: mysql:8.0
+    restart: no
+    env_file:
+      - ./backend/.env.database
+    ports:
+      - "127.0.0.1:3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      start_period: 10s
+      retries: 10
+
+  migrate:
+    image: node:24-bookworm-slim
+    working_dir: /usr/src/app
+    volumes:
+      - ./backend:/usr/src/app
+    env_file:
+      - ./backend/.env.app
+    depends_on:
+      database:
+        condition: service_healthy
+    command: echo "migrations started" && npm ci && npm run db:deploy
+    restart: no
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/prisma:/app/prisma
+    restart: no
+    ports:
+      - "127.0.0.1:3000:3000"
+    stdin_open: true
+    tty: true
+    env_file:
+      - ./backend/.env.app
+    depends_on:
+      database:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/" ]
+      timeout: 10s
+      start_period: 2s
+      retries: 3
+  #    develop:
+  #      watch:
+  #        - action: sync
+  #          path: ./backend/src
+  #          target: /app/src
+  ##          ignore:
+  ##            - Dockerfile
+  ##            - package*.json
+  #        - action: sync+restart
+  #          path: ./backend/index.ts
+  #          target: /app/index.ts
+  #          ignore:
+  #            - Dockerfile
+  #            - package*.json
+  #        - action: rebuild
+  #          path: ./backend/prisma
+  #          target: /app/prisma
+  ##          ignore:
+  ##            - index.ts
+  ##            - ./static
+
+  prisma-studio:
+    image: node:24-bookworm-slim
+    working_dir: /usr/src/app
+    volumes:
+      - ./backend:/usr/src/app
+    command: sh -c "npx prisma db push && npx prisma studio --port 5555 --browser none"
+    ports:
+      - "127.0.0.1:5555:5555"
+    env_file:
+      - ./backend/.env.app
+    depends_on:
+      database:
+        condition: service_healthy
+      app:
+        condition: service_started
+      migrate:
+        condition: service_completed_successfully
+
+  front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:5173:5173"
+    env_file:
+      - ./frontend/.env
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      app:
+        condition: service_started
+  #    develop:
+  #      watch:
+  #        - action: sync
+  #          path: ./frontend/src
+  #          target: /app/src
+  #        - action: rebuild
+  #          path: ./frontend
+  #          target: /app
+  #          ignore:
+  #            - ./src
+  #
+
+  mongo:
+    image: mongo:noble
+    restart: no
+    ports:
+      - "127.0.0.1:27017:27017"
+    env_file:
+      - ./backend/.env.mongo
+    volumes:
+      - mongo-volume:/data/db
+    # disable printing logs in attached docker compose
+    command: mongod --quiet --logpath /dev/null
+
+volumes:
+  mysql-volume:
+  mongo-volume:
