@@ -5,13 +5,17 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 import { useLoggedInOnly } from '@/hooks/useLoggedInOnly.ts'
 import FieldGroup from '@/components/FieldGroup'
 import type { ChangeEvent } from 'react'
+import { useNavigate } from 'react-router'
 
 export default function UserSettings() {
     useLoggedInOnly()
 
-    const auth = useAuth()
+    const navigate = useNavigate()
 
-    if (!auth.user)
+    const auth = useAuth()
+    const user = auth.user
+
+    if (!user)
     {
         return <LoadingSpinner/>
     }
@@ -28,10 +32,10 @@ export default function UserSettings() {
                             labelText="Nazwa użytkownika"
                             inputHTMLId="input_username"
                             inputType="text"
-                            inputValue={auth.user.name}
+                            inputValue={user.name}
                             onInputChange={(event: ChangeEvent) => {
-                                console.log(event.target)}
-                            }
+                                console.log(event.target)
+                            }}
                             isVertical={false}
                         />
 
@@ -52,6 +56,9 @@ export default function UserSettings() {
                     <h2>Akcje</h2>
                     <button onClick={auth.logout}>Wyloguj</button>
                     <button>Resetuj hasło</button>
+                    {user.id && (
+                        <button onClick={() => navigate(`/user/${user.id}`)}>Zobacz profil</button>
+                    )}
                 </Container>
             </section>
         </main>

@@ -31,7 +31,7 @@ export default function UserProfile() {
 
             {data && (
                 <>
-                    <h1>{data.name}</h1>
+                    <h1>Profil użytkownika {data.name}</h1>
                     <h2>Utworzone quizy</h2>
                     <Container cssClassName={` ${styles.QuizContainer}`}>
                         {data.createdQuizzes.map((quiz) => (
