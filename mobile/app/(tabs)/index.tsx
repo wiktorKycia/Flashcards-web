@@ -6,9 +6,9 @@ import { HelloWave } from '@/components/hello-wave'
 import ParallaxScrollView from '@/components/parallax-scroll-view'
 import { ThemedText } from '@/components/themed-text'
 import { ThemedView } from '@/components/themed-view'
+import { API_BASE_URL } from '@/lib/auth'
 import { Link } from 'expo-router'
 
-const API_BASE_URL = 'http://localhost:3000'
 
 type ApiResponse = {
     content?: string
@@ -108,6 +108,19 @@ export default function HomeScreen() {
                     <ThemedText>{apiMessage}</ThemedText>
                 )}
             </ThemedView>
+            <ThemedView style={styles.stepContainer}>
+                <ThemedText type="subtitle">Account</ThemedText>
+                <ThemedView style={styles.authButtons}>
+                    <Link href="../login" asChild>
+                        <ThemedText style={styles.authButtonText}>Login</ThemedText>
+                    </Link>
+                    <Link href="../register" asChild>
+                        <ThemedText style={styles.authButtonSecondaryText}>
+                            Register
+                        </ThemedText>
+                    </Link>
+                </ThemedView>
+            </ThemedView>
             {/*<ThemedView style={styles.stepContainer}>*/}
             {/*    <Link href="/modal">*/}
             {/*        <Link.Trigger>*/}
@@ -171,6 +184,29 @@ const styles = StyleSheet.create({
     stepContainer: {
         gap: 8,
         marginBottom: 8
+    },
+    authButtons: {
+        flexDirection: 'row',
+        gap: 12
+    },
+    authButtonText: {
+        backgroundColor: '#22c55e',
+        color: '#e3f0e3',
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        overflow: 'hidden',
+        fontWeight: '700'
+    },
+    authButtonSecondaryText: {
+        borderColor: '#22c55e',
+        borderWidth: 1,
+        color: '#22c55e',
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        overflow: 'hidden',
+        fontWeight: '700'
     },
     reactLogo: {
         height: 178,
