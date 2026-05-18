@@ -35,12 +35,10 @@ export default function UserProfile() {
                     <h2>Utworzone quizy</h2>
                     <Container cssClassName={` ${styles.QuizContainer}`}>
                         {data.createdQuizzes.map((quiz) => (
-                            <Container key={quiz.id}>
-                                <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
-                                    <h2>{quiz.name}</h2>
-                                    <p>{quiz.description}</p>
-                                </Link>
-                            </Container>
+                            <Link to={`/quiz/${quiz.id}`} key={quiz.id} className={styles.QuizItem}>
+                                <h2>{quiz.name}</h2>
+                                <p>{quiz.description}</p>
+                            </Link>
                         ))}
                     </Container>
 
@@ -49,12 +47,10 @@ export default function UserProfile() {
                             <h2>Zapisane quizy</h2>
                             <Container cssClassName={` ${styles.QuizContainer}`}>
                                 {data.savedQuizzes.map((quiz) => (
-                                    <Container key={quiz.id}>
-                                        <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
-                                            <h2>{quiz.name}</h2>
-                                            <p>{quiz.description}</p>
-                                        </Link>
-                                    </Container>
+                                    <Link to={`/quiz/${quiz.id}`} key={quiz.id} className={styles.QuizItem}>
+                                        <h2>{quiz.name}</h2>
+                                        <p>{quiz.description}</p>
+                                    </Link>
                                 ))}
                             </Container>
                         </>

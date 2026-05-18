@@ -1,3 +1,4 @@
+@use "@/styles/mixins" as *;
 * {
     margin: 0;
     padding: 0;
@@ -140,24 +141,6 @@ a {
     color: var(--color-accent);
     text-decoration: none;
     font-size: 1.4rem;
-}
-
-@mixin container-base {
-    padding: 2rem;
-    background-color: transparent;
-}
-@mixin borderless {
-    border: none;
-}
-@mixin flex {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-@mixin flex-start-both {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
 }
 
 .container-borderless {
