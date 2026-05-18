@@ -32,8 +32,8 @@ export default function UserProfile() {
             {data && (
                 <>
                     <h1>{data.name}</h1>
-                    <Container>
                     <h2>Utworzone quizy</h2>
+                    <Container cssClassName={` ${styles.QuizContainer}`}>
                         {data.createdQuizzes.map((quiz) => (
                             <Container key={quiz.id}>
                                 <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
@@ -47,7 +47,7 @@ export default function UserProfile() {
                     {isVisitingSelf && data.savedQuizzes &&(
                         <>
                             <h2>Zapisane quizy</h2>
-                            <Container>
+                            <Container cssClassName={` ${styles.QuizContainer}`}>
                                 {data.savedQuizzes.map((quiz) => (
                                     <Container key={quiz.id}>
                                         <Link to={`/quiz/${quiz.id}`} className={styles.QuizItem}>
