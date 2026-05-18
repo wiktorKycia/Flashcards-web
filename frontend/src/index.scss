@@ -41,14 +41,7 @@
 
     --color-text-primary: #e8f3ea;
     --color-text-secondary: #a0ada2;
-    --color-text-buttons: #e3f0e3;//#121613;
-/*
-    --color-accent: #4ade80;
-    --color-accent2: #22c55e;
-    --color-accent3: #16a34a;
-    --color-accent4: #15803d;
-    --color-accent5: #166534;
-*/
+    --color-text-buttons: #e3f0e3;
 
     --color-accent5: #22c55e;
     --color-accent4: #009e3b;
@@ -66,6 +59,7 @@
     --transition: all 0.3s ease;
     --transition-long: all 550ms;
 }
+
 html {
     font-family: Roboto, sans-serif;
     font-size: 10px;
@@ -148,36 +142,47 @@ a {
     font-size: 1.4rem;
 }
 
-.container-borderless {
+@mixin container-base {
     padding: 2rem;
     background-color: transparent;
-    border: none
+}
+@mixin borderless {
+    border: none;
+}
+@mixin flex {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+@mixin flex-start-both {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.container-borderless {
+    @include container-base;
+    @include borderless;
 }
 
 .container-positioner {
-    border: none;
+    @include container-base;
+    @include borderless;
     padding: 0;
     margin: 0;
-    background-color: transparent;
 }
 
 .container-horizontal-borderless {
-    display: flex;
+    @include container-base;
+    @include borderless;
+    @include flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 2rem;
-    border: none;
-    background-color: transparent;
 }
 
 .container-vertical-borderless {
-    display: flex;
+    @include container-base;
+    @include borderless;
+    @include flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    padding: 2rem;
-    border: none;
-    background-color: transparent;
 }
 
